@@ -1,0 +1,443 @@
+\documentclass[ 12pt,a4paper,twocolumn,fleqn]{article}
+\usepackage{graphicx}
+\usepackage[a4paper,top=20mm, bottom=30mm, left=10mm, right=25mm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage[]{algorithm2e}
+\usepackage{color}
+\usepackage{fancybox}
+\thisfancypage{%
+  \setlength{\fboxsep}{20pt}\doublebox}{}
+\pagestyle{fancy}
+\usepackage{lineno}
+\usepackage{xtab,booktabs}
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage[compact]{titlesec}
+\titlespacing{\section}{0pt}{*0}{*0}
+\titlespacing{\subsection}{0pt}{*0}{*0}
+\titlespacing{\subsubsection}{0pt}{*0}{*0}
+\setlength\columnsep{25pt}
+\makeatletter
+\g@addto@macro{\normalsize}{%
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}}
+\makeatother
+\mathindent=0.0pt
+\usepackage{float}
+\renewcommand{\baselinestretch}{1.5}
+\begin{document}
+\lhead{Adversarial Attack on Autonomous Vehicles}
+\chead{}
+\rhead{Manoj, Nithin, Prajwal, Pururav, Batch 60}
+\onecolumn
+\begin{center}
+\text{A Project Report On} \\
+\smallskip
+\textcolor{red}{\LARGE{Adversarial Attack on Autonomous Vehicles}} \\
+\large{Submitted in partial fulfillment of the requirement for the $8^{th}$ semester}
+\large{\textbf{Bachelor of Engineering}} \\
+\large{in} \\
+\large{Computer Science and Engineering} \\
+\textcolor{blue}{\LARGE{DAYANANDA SAGAR COLLEGE OF ENGINEERING}} \\
+\footnotesize{(An Autonomous Institute affiliated to VTU, Belagavi, Approved by AICTE \& ISO 9001:2008 Certified)} \\
+\footnotesize{Accredited by National Assessment \& Accreditation Council (NAAC) with ‘A’ grade}  \\
+\footnotesize{Shavige Malleshwara Hills, Kumaraswamy Layout, Bengaluru-560078} \\
+\includegraphics[scale=0.4]{media/DSCE-min.png} \\
+\textit{Submitted By} \\
+\textbf{Manoj B Bhamsagar \space 1DS18CS066} \\
+\textbf{Nithin A G \space 1DS18CS081} \\
+\textbf{Prajwal Ponnana \space 1DS18CS093} \\
+\textbf{Pururav H K \space 1DS18CS098} \\
+\textit{Under the guidance of} \\
+\textbf{Prof. Sarala D V}\\
+\text{Asst Professor, CSE , DSCE}\\
+\Large{\textbf{2020 - 2021}} \\
+\textcolor{blue}{\Large{Department of Computer Science and Engineering}} \\
+\textcolor{blue}{\Large{DAYANANDA SAGAR COLLEGE OF ENGINEERING}} \\
+\textcolor{blue}{\Large{Bangalore - 560078}} \\
+\end{center}
+\newpage
+  \pagestyle{fancy}
+\thisfancypage{%
+  \setlength{\fboxsep}{20pt}\doublebox}{}
+\begin{center}
+\textcolor{red}{\LARGE{VISVESVARAYA TECHNOLOGICAL UNIVERSITY}} \\
+\textcolor{red}{\LARGE{Dayananda Sagar College of Engineering}} \\
+\footnotesize{(An Autonomous Institute affiliated to VTU, Belagavi, Approved by AICTE \& ISO 9001:2008 Certified)} \\
+\footnotesize{Accredited by National Assessment \& Accreditation Council (NAAC) with ‘A’ grade}  \\
+\footnotesize{Shavige Malleshwara Hills, Kumaraswamy Layout, Bengaluru-560078} \\
+\begin{flushleft}
+\textcolor{blue}{\LARGE{\textbf{Department of Computer Science \& Engineering}}} \\
+\end{flushleft}
+\includegraphics[scale=0.4]{media/DSCE-min.png} \\
+\Large{\underline{\textbf{CERTIFICATE}}} \\
+  \end{center}
+\normalsize
+This is to certify that the project entitled \textbf{Adversarial Attack on Autonomous Vehicles} is a bonafide work carried out by \textbf{Manoj B Bhamsagar, [1DS18CS066]}, \textbf{Nithin A G [1DS18CS081], Prajwal Ponnana [1DS18CS093]} and \textbf{Pururav H K [1DS18CS098]} in partial fulfillment of 8th semester, Bachelor of Engineering in Computer Science and Engineering under Visvesvaraya Technological University, Belgaum during the year 2020-21. \\
+\\
+\textbf{Prof. Sarala D V}
+\hfill
+\textbf{Dr. Ramesh Babu D R}
+\hfill
+\textbf{Dr. C P S Prakash} \\
+\text{(Internal Guide)}
+\hfill
+\text{Vice Principal \& HOD}
+\hfill
+\text{Principal} \\
+\text{Asst Prof. CSE, DSCE} 
+\hfill
+\text{CSE, DSCE}
+\hfill
+\text{DSCE} \\
+\\
+\text{Signature:...........}
+\hfill
+\text{Signature:...........}
+\hfill
+\text{Signature:...........} \\
+\\
+\\
+\text{Name of the Examiners:}
+\hfill
+\text{Signature with date:} \\
+\text{1...........................}
+\hfill{.............................} \\
+\text{2.............................} 
+\hfill{............................} \\
+\newpage
+  \pagestyle{fancy}
+\thisfancypage{%
+  \setlength{\fboxsep}{20pt}\doublebox}{}
+\begin{center}
+\LARGE{{\underline{Acknowledgement}}} \\
+\end{center}
+\normalsize
+We are pleased to have successfully completed the project \textbf{Adversarial Attack on Autonomous Vehicles}. We thoroughly enjoyed the process of working on this project and gained a lot of knowledge doing so.
+\\
+\hfill
+\\
+We would like to take this opportunity to express our gratitude to \textbf{Dr. C P S Prakash}, Principal of DSCE, for permitting us to utilize all the necessary facilities of the institution.
+\\
+\hfill
+\\
+We also thank our respected Vice Principal, HOD of Computer Science \& Engineering, DSCE, Bangalore,\textbf{ Dr. Ramesh Babu D R}, for his support and encouragement throughout the process.
+\\
+\hfill
+\\
+We are immensely grateful to our respected and learned guide, \textbf{Sarala D V} Assistant Professor CSE, DSCE for their valuable help and guidance. We are indebted to them for their invaluable guidance throughout the process and their useful inputs at all stages of the process.
+\\
+\hfill
+\\
+We also thank all the faculty and support staff of Department of Computer Science, DSCE. Without their support over the years, this work would not have been possible.
+\\
+\hfill
+\\
+Lastly, we would like to express our deep appreciation towards our classmates and our family for providing us with constant moral support and encouragement. They have stood by us in the most difficult of times.
+\\
+\hfill
+\\
+\begin{flushright}
+\textbf{Manoj B Bhamsagar \space 1DS18CS066} \\
+\textbf{Nithin A G \space 1DS18CS081} \\
+\textbf{Prajwal Ponnana \space 1DS18CS093} \\
+\textbf{Pururav H K \space 1DS18CS098} \\
+\end{flushright}
+\newpage
+  \pagestyle{fancy}
+\thisfancypage{%
+  \setlength{\fboxsep}{20pt}\doublebox}{}
+\setstretch{1.5}
+\twocolumn[
+\begin{@twocolumnfalse}
+\title {Adversarial Attack on Autonomous Vehicles}
+\author{Manoj, Nithin, Prajwal, Pururav}
+\maketitle
+\begin{abstract}
+Deep learning is at the core of the present emergence of artificial intelligence. In the realm of computer vision, it has become the workhorse for applications ranging from self-driving cars to surveillance and security. While deep neural networks have exhibited extraordinary effectiveness (often exceeding human capabilities) in addressing difficult problems, new research shows that they are subject to adversarial assaults in the form of minor changes to inputs that cause a model to anticipate wrong outputs. Such disturbances are generally too subtle to be seen in photos, but they fully deceive deep learning networks. Adversarial assaults are a severe danger to the implementation of deep learning. This has lately led to a significant increase in donations in this direction. \\
+%
+Adversarial machine learning is a machine learning strategy that uses false input to fool machine learning models. As a result, it comprises both the production and detection of adversarial instances, which are inputs designed specifically to fool classifiers. Adversarial machine learning attacks have been intensively researched in fields such as image classification and spam detection.\\
+%
+Our project involves the development of two white-box targeted attacks against end-to-end autonomous driving systems. The driving model receives an image and outputs the steering angle. Only by changing the input image can our attacks influence the behavior of the autonomous driving system. On CPUs, both attacks can be launched in real time. This demonstration intends to raise concerns about the use of end-to-end models in safety-critical systems.
+\end{abstract}
+\end{@twocolumnfalse}]
+\linenumbers
+\modulolinenumbers[5]
+\onecolumn
+\newpage
+  \pagestyle{fancy}
+\thisfancypage{%
+  \setlength{\fboxsep}{20pt}\doublebox}{}
+\tableofcontents
+\newpage
+  \pagestyle{fancy}
+\thisfancypage{%
+  \setlength{\fboxsep}{20pt}\doublebox}{}
+\part{Overview}
+Welcome to the main body of the report. As you can see we have used the part tag above to label the first part of our report, called the overview. We have done this so that \LaTeX{} can automatically number our document. There are multiple tiers to this numbering, such as sections, subsections, subsubsections and paragraphs. You can also use chapters, but for that at the top of the document you must enable report instead of article. I think 4 levels of nesting is enough. \LaTeX{} also uses the information you have given it to populate the table of contents (Index). So please use the appropriate tags instead of manually changing the font, it will make your document easier to edit, maintain and will also give you a neatly formatted index.
+\section{Introduction}
+This is a section. I have used the section tab which you can view in the source file.
+\subsection{Autonomous Vehicles}
+Autonomous vehicles (AVs) have the potential to be both disruptive and useful to our transportation system. This innovative technology has the potential to have an impact on vehicle safety, traffic congestion, and travel behavior. Overall, important societal AV impacts in the form of collision saves, reduced travel time, improved fuel economy, and parking advantages are expected to be around 2000 dollars per AV per year, and may eventually reach approximately 4000 dollars when all crash costs are considered.\\
+%
+Many companies are actively developing related hardware and software technologies toward fully autonomous driving capability with no human intervention, which has sparked increased interest in autonomous cars in recent years. Deep neural networks (DNNs) have recently been used successfully in a variety of perception and control tasks. They are also significant workloads for autonomous vehicles.\\
+%
+The Tesla Model S, for example, was known to use a specialized chip (MobileEye EyeQ) with a vision-based real-time obstacle detection system based on a DNN. Researchers are currently investigating DNN-based end-to-end real-time control for robotics applications. More DNN-based artificial intelligence (AI) workloads are expected to be used in future autonomous vehicles.\\
+\subsubsection{End-to-End Deep Learning for Autonomous Vehicles}
+A traditional strategy to solving the problem of autonomous driving has been to decompose the problem into many sub-problems, such as lane marker detection, path planning, and low-level control, which together comprise a processing pipeline. Recently, researchers have begun to investigate another strategy that drastically streamlines the typical control pipeline by directly producing control outputs from sensor inputs using deep neural networks.In the late 1980s, a small 3-layer fully connected neural network was used to demonstrate the use of neural networks for end-to-end control of autonomous vehicles. Later, in the early 2000s, a DARPA Autonomous Vehicle (DAVE) project  used a 6-layer convolutional neural network (CNN), and most recently, NVIDIA's DAVE-2 project used a 9-layer CNN. All of these experiments use neural network models instead of the traditional hand-written rules and intermediary procedures that are used in traditional robotics control. The neural network models use the raw picture pixels as input and directly output steering control signals. According to NVIDIA's most recent endeavor, its trained CNN drives their modified cars on public roads without any assistance from a human.\\
+\subsection{Adversarial Attacks}
+With the rapid advancement of deep learning (DL) and artificial intelligence (AI) approaches, it is essential to guarantee the security and resilience of the implemented algorithms. The security weakness of DL algorithms to hostile samples has recently gained widespread recognition. The fake samples, however they appear harmless to humans, might cause numerous errors in DL models. Adversarial attacks are successfully used in real-world situations to further illustrate its applicability.\\
+%
+As a result, adversarial attack and defense approaches have gained popularity as a study area in recent years among both the machine learning and security communities. The theoretical underpinnings, methods, and applications of adversarial attack strategies are originally introduced in this study. We then go over a few research projects on defensive strategies that span the field's broad horizon. The discussion of a few unresolved issues and difficulties that remain will hopefully spur additional study in this crucial field.\\
+\subsubsection{White Box Attacks}
+The adversary in a white-box attack is fully aware of the target model. The learnt weights and tuning parameters for the model are among the information the opponent is aware of. In other circumstances, labeled training data is also accessible. With this knowledge, the attacker will often model the distribution using weights and generate perturbed inputs in order to breach the bounds.\\
+%
+White-box attack techniques often presuppose that the attacker is fully aware of the architecture and characteristics of the target model. The perturbation is frequently limited within a specific allowable perturbation budget or its Lp is smaller than a specific magnitude, i.e. . ||v||p ≤ e, to make the adversarial perturbation undetectable. Under such restrictions, the majority of adversarial assaults now in use aim to maximize a certain loss L(x + v, y), for which the CE loss is frequently used.\\
+\subsubsection{Black Box Attacks}
+A black-box attack is one in which the attacker has little understanding of the model and, occasionally, no labeled data. Black-box constraints are frequently attacked by querying the model on inputs, checking the labels, or looking at the confidence levels. Black-box assaults are more practical even though they restrict the attacker's options. These attacks are typically conducted on fully developed and deployed systems. In the actual world, attacks with the purpose of getting around a system, taking it offline, or jeopardizing its integrity occur.\\
+%
+In this type of attack, the opponent and challenger can both be taken into account. A challenger is a party that develops a model and deploys it, whereas an adversary is an attacker who seeks to compromise the system in order to achieve a specific objective. In this context, a variety of capability configurations that mimic real-world behavior are feasible. As an illustration, configuration adjustments to adversarial user objectives might be made if a robber fleeing the crime scene tries to trick the surveillance system into tagging a different car number or if a criminal targets the prey's car number getting tagged. However, in this instance, a different entity owns the system that is being attacked. The monitoring system was not created with the robber or the criminal in mind.\\
+%
+The adversary's restricted skills are simply a mirror of actual events. Therefore, research in this area is more useful.\\
+\subsection{Real World-Application}
+Creating data examples that force the machine learning model to make a false prediction or collapse is the aim of adversarial machine learning. These situations usually make use of the numerical representations of the data by being virtually undetectable to humans and not raising any red flags.
+Adversarial instances diverge from the statistical features that are normally used to train machine learning models, which leads to poor performance.\\
+%
+One of the most well-known applications of an adversarial strategy is a number of successful tests aiming at self-driving car identification models. For instance, researchers were able to completely fool the traffic sign recognition system into thinking that the stop sign reflected a speed limit using simple physical tactics.\\
+Here are the reasons why adversarial attacks are important:-
+\begin{enumerate}
+    \item To design robust models: \\
+    A product must undergo a variety of input testing kinds during a large-scale development before being judged safe for industrial usage. Either the system will know what to do with the input, or it won't.\\
+    %
+    However, machine learning has largely avoided this. An enormous number of out-of-sample possibilities, where the model is not expected to perform by default, was one of the key causes of this. Since there is no way to assess the possible utility of input before the model, the openness of the input channels results in feeding the malevolent example.\\
+    %
+    Even more, assistance will be provided in dealing with unanticipated out-of-sample inputs or attacks on the system by the availability of adversarial samples and the inclusion of technologies capable of neutralizing them
+    \item  Acknowledging the Impacts:\\
+    Opportunities to introduce a new algorithm into some decision-making processes continue to expand and become more ambitious as the artificial intelligence field develops into one that is incredibly significant. Meanwhile, the development pipeline still frequently follows the "collect data-train-test-deploy" pattern.\\
+    %
+    Contradictory machine learning demonstrates why this fails in both large-scale and commercial applications. There are other horrifying examples of how to trick automatic car behaviour with only a few carefully chosen stickers on a traffic sign or how to pretend to be a doctor by using an image that appears to be normal. Because of adversarial machine learning, we are forced to consider the decisions we are making, their significance, and if we have enough resources to defend them.\\
+    \item Earning customer confidence :\\
+    The overall field of artificial intelligence has been deficient in a sense of security and stability. Typically, the typical client is unaware of how precise and secure the AI system is and why it makes certain conclusions. Those potential customers who place a high value on security and performance stability may be won over by demonstrating the system's stability.\\
+    \item Need for White Hats: \\
+    It has long been necessary to test the security of any digital system in order to make sure that it is adequately protected against potential assaults. As a result, numerous specialized methods for producing adversarial instances already exist, with some of them even becoming well-known tools, such as the Fast Sign Gradient Method developed by Ian Goodfellow and others.\\
+    %
+    Because there is such a wide range of adversarial tactics that could be used, new countermeasures are always being developed. The models' vulnerability becomes apparent as a result. In locations with greater security demands, it can be crucial to stay one step ahead of the breaching risks. As a result, investigating model flaws and how to fix them could be added as a new testing stage in the model preparation process.\\
+\end{enumerate}
+\subsection{Organization of the Project Report}
+The project report is organized as given below: \\
+%
+In Chapter (2), we discuss the problem statement and our solution to the problem. The same chapter also deals with the other existing technology. The Chapter that follows i.e. chapter (3) consists of the details on the literature survey of the papers to the problem statement and the proposed solution. In Chapter (4), we present the System Outline and other systems in the form of a Data flow diagram and a sequence diagram. The next chapter, chapter (5) gives the requirements and details about the implementation of the proposed system. Chapter 6 deals with the testing of the product and its desired results. In Chapter (7), we discuss the influencing parameters and their effect on the system. The same chapter deals with establishing the optimal parameters for the system. Chapter (8) concludes the paper along with a mention of the Future Enhancements. Chapter (9) details the references made during the development of the system. The other supporting information and the source code are gathered in the Appendix. \\
+\section{Problem Statement and Proposed Solution}
+\subsection{Problem Statement}
+To demonstrate popular adversarial attacks on an end to end regression-based autonomous driving model\\
+\subsection{Existing Systems:}
+\subsubsection{Adversarial Attacks on Classification Models}
+Adversarial attacks against classification tasks have now been extensively explored in the last decade, however, we find that comparatively few works focus on regression problems.\\
+%
+For classification problems, the assault is effective if the prediction departs from the ground truth. For regression tasks, an acceptable prediction could be within a range. For example, the estimated property price can vary within a fair range. Using the real number as the ground truth, we can utilize Root Mean Square Error (RMSE) to assess the effectiveness of attacks. An effective attack should result in a larger RMSE loss than random noises. An adversarial attack on a classification model builds an imperceptible adversarial perturbation to form an adversarial example x0 = x + e and have the target model classify x0 as c0 that is distinct from c given a target model f and an original image x with its class c.\\
+\subsection{Proposed Solution}
+Current research on autonomous driving, which is a regression task, focuses on asynchronous offline attacks. The driving record is divided into static images and accompanying steering angles, and the attack is applied to each static image to calculate the total success rate. However, many road accidents are the result of tiny errors made at a key juncture. As a result, some stealth attacks with low overall success rates may nonetheless be dangerous. On the other hand, driving models, like human drivers, can react to adversarial attacks; some attacks may be negated by model reactions if applied synchronously. To explore those stealth attacks and the responses of driving models to those attacks, we would like to conduct online attacks, which means the attack will be carried out while the vehicle is travelling. Online attacks on real-world autonomous driving systems are dangerous. As a result, our adversarial driving system makes use of a self-driving simulator. For example, the fast gradient sign technique (FGSM), which linearizes the cost function around the current value of and produces an ideal max-norm restricted perturbation, is a previous offline assault that typically relies on the ground truth. The cost J(x, y) cannot be determined for an autonomous navigation system since there is no ground truth for the steering command. Even an experienced human driver can perform various tasks in the same environment. Driving safely is a common driving instruction. As a result, we must decide on an appropriate ground truth for our assaults. \\
+%
+Our attack strategies rely on a number of presumptions:\\
+%
+We launch our attacks without any pre-labelled ground truth online, we can accept the driving model's output as the actual situation because it is precise enough and we need not attack if the model is flawed in and of itself. The driving task should be failed by the model itself. If the deviation under attack is greater than the divergence under random sounds, then attack is said to be successful.By making these assumptions, we are able to create two distinct attack types that may be used to influence the behaviour of the entire autonomous driving system.\\
+%
+\subsubsection{Fast Gradient Sign Method on Regression Models}
+In this white-box approach, the perturbation is determined at each timestep. This assault has the ability to steer the car in the desired direction (either left or right). With input of x and prediction of f, a neural network is indicated by the notation f(x). Regression model attacks may be thought of as binary targeted attacks. We have two options: we can either make the projection bigger or smaller.\\
+\begin{flalign}
+\eta = sign(\bigtriangledown x\pm f(x))
+\end{flalign}
+We directly linearize the model's output rather than the cost function in order to influence the behavior of the driving model. The output will grow when f(x) is linearized, but the output will decrease when f(x) is linearized.Our steering command has a left to right range of -1 to 1. The expected steering command will grow if we linearize the function f(x), pushing the car to the right as a result of the attack. Likewise, by linearizing f(x), we may target the vehicle's left side.
+\\
+\subsubsection{ Universal Adversarial Perturbation on Regression Models}
+White-box attack of this kind determines a universal perturbation for each timestep. The two procedures that make up the attack are learning and executing. During the learning process, we will create the universal perturbation for each frame by linearizing the model's output, and then identify the minimal perturbation that shifts the prediction's sign in the desired direction.\\
+\begin{flalign}
+\bigtriangledown \eta \leftarrow  \frac{_{\bigtriangledown_{x}(\pm f(x))}}{\left \| \omega  \right \|_{2}}
+\end{flalign}
+To make sure the requirement\\
+\begin{flalign}
+\left \| \eta _{0} \right \|_{p} \leq \varepsilon 
+\end{flalign}
+is met, we then project the total perturbation onto the lp ball with a radius of nI and a center at 0.\\
+\begin{flalign}
+P_{\rho ,\varepsilon}(\eta ) = arg min\left \| \eta - \eta {_{}}' \right \|_{2} subject\left \| \eta {}' \right \|_{p} \leq \varepsilon 
+\end{flalign}
+
+
+
+\section{text formatting}
+\LaTeX{} includes some default text sizes. These are labelled: \\
+\huge{huge} \\
+\LARGE{LARGE} \\
+\Large{Large} \\
+\large{large} \\
+\normalsize{normalsize} \\
+\small{small} \\
+\footnotesize{footnotesize} \\
+\scriptsize{scriptsize}
+\newpage
+  \pagestyle{fancy}
+\thisfancypage{%
+  \setlength{\fboxsep}{20pt}\doublebox}{}
+\normalsize
+\subsection{Bold, Italics, Underline and mathmode}
+You can use the text{} tag for normal text. If you are typing paragraphs, it is best to not use any markup as this may cause overflow errors. the textbf tag will give you \textbf{bold text}. You can also use Texmaker's B button on the left editing pane. \\
+You can use textit tag for italics. This will \textit{italicize the text}. You can also use Texmaker's i button on the left editing pane. \\
+You can use the underline tag for underline. This will \underline{underline the text}. \\
+Rendering beautiful equations is one of the features of \LaTeX{}. You can represent Greek and other symbols easily by using the backslash with the symbol name. However to do this you must first enable mathmode. You can do this by using Dollar symbols to encase the mathematical symbols. I use flalign to align my equations properly. Given below are some samples:
+\begin{flalign} \begin{aligned} Stall \, velocity \; V_{stall} = \sqrt{\frac{2W}{\rho S (C_{L})_{max}}} \end{aligned} \end{flalign}
+\begin{flalign}
+\begin{split}
+Take off distance \,Sg= \\
+\frac{1.21(W/S)}{g \rho_{ \infty} C_{Lmax}(T-D/W)-\mu_{r}(1-(L/W))]_{0.7VTO}} \\+
+1.1N\sqrt{\frac{2W}{\rho S C_{Lmax}}}
+\end{split}
+\end{flalign} \\
+You can see that \LaTeX{} also numbers our equations for us!
+\subsection{Coloured Text}
+We can use the textcolour tag to color our text (color is spelt with an american spelling). You can also nest the text styles and sizes mentioned above into the colour tags to produce custom text with different font styles, sizes and colours. Given below are some samples: \\
+\hfill
+\\
+\textcolor{red}{\LARGE{Large red coloured text}} \\
+\textcolor{blue}{\normalsize{Normal blue coloured text}} \\
+\textcolor{green}{\normalsize{\textbf{Bold green coloured text}}} \\
+\textcolor{yellow}{\normalsize{\textit{Italicized yellow coloured text}}}
+\newpage
+  \pagestyle{fancy}
+\thisfancypage{%
+  \setlength{\fboxsep}{20pt}\doublebox}{}
+\twocolumn
+\section{Two Column}
+If you want your report to have the look of a research paper, you can use the twocolumn tag. If you want to switch out of two columns, you can just use the onecolumn tag again. The empty space between the columns is determined by the columnsep parameter, which is at the head of the file. \\
+\\
+You can use the multicols package for 2 or even 3 column layouts and switch dynamically between them on the same page. This however may cause formatting issues and is generally not recommended. If you need to switch to two columns, use a new page to avoid formatting issues. The rest of this page is random text to show you how a two column layout looks.
+\\
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+\\
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. \\
+\\
+This is the end of two column view.
+\onecolumn
+\newpage
+  \pagestyle{fancy}
+\thisfancypage{%
+  \setlength{\fboxsep}{20pt}\doublebox}{}
+\subsection{Hyperlinks}
+\LaTeX{} provides us with Hyperlinks via the Hyperref package. You can use the href tag to link to a URL and name it something. The url tag can be used to link a URL without an alias. The mailto option can be used when referring to an email ID so that the mail client opens up directly when clicked. Latex generated PDFs also show a blue box around links. Examples below: \\
+Link with alias: \href{https://dsce.edu.in/}{DSCE - Homepage} \\
+Link without alias: \url{https://dsce.edu.in/} \\
+My email address is: \href{mailto:ashutosh@gnu.org}{ashutosh@gnu.org} \\
+Combine color with href: \textcolor{blue}{\href{https://dsce.edu.in/}{DSCE - Homepage}} \\
+\section{Code and Algorithms}
+\subsection{Code}
+\LaTeX{} provides us with several packages to handle code. Some of these include verbatim and listings. Listings is far more powerful and as usual, it has to be declared in the header with the usepackage along with colour. Later we define lstset (given in the source file). We define the language and what colours we want for the keywords, numbers, comments et al. An example output is given below: \\
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+\begin{lstlisting}
+// Hello.java
+import javax.swing.JApplet;
+import java.awt.Graphics;
+
+public class Hello extends JApplet {
+    public void paintComponent(Graphics g) {
+        g.drawString("Hello, world!", 65, 95);
+    }    
+}
+\end{lstlisting}
+\newpage
+  \pagestyle{fancy}
+\thisfancypage{%
+  \setlength{\fboxsep}{20pt}\doublebox}{}
+\subsection{Algorithms}
+Algorithms or Pseudocode can be written using Algorithm2E or Algorithm (deprecated) or Algorithmx packages. Here is an example using Algorithm2e. The package must be included in the document preamble.
+\begin{algorithm}[H]
+ \KwData{this text}
+ \KwResult{how to write algorithm with \LaTeX2e }
+ initialization\;
+ \While{not at end of this document}{
+  read current\;
+  \eIf{understand}{
+   go to next section\;
+   current section becomes this one\;
+   }{
+   go back to the beginning of current section\;
+  }
+ }
+ \caption{How to write algorithms}
+\end{algorithm}
+\section{Tables}
+\LaTeX{} provides several packages for tables. It is easy to draw and modify tables with any number of rows and columns. The table will automatically flow to the next page incase it does not fit in one page. You can use the Xtabs or tabular package to handle many different types of tables. Given below is a sample:
+\begin{table}[H]
+\centering
+\footnotesize
+\begin{tabular}{|p{2cm}| p{2cm} |p{2cm}|p{2cm}|p{2cm}|}
+\hline
+Comp & Ult Load (N) & LA (N) & FoS & MoS\\
+\hline\hline
+Wing & 10 & 12 & 13 & 43\\
+Fuselage & 45.14 & 66.67 & 1.4 & 47\\
+Boom & 978 & 3.42 & 286 & 186\\
+Landing gear & 490.32 & 294 & 13.67& 03.67\\
+\hline
+\end{tabular}
+\caption{Critical Margins Table}
+\label{table:10}
+FoS = Factor of Safety \\
+MoS = Margin of Safety \\
+\end{table}
+The width of the rows and other properties can be edited on the first line begin tabular (see source). Try to avoid multiple table packages together as this may lead to errors.
+\newpage
+  \pagestyle{fancy}
+\thisfancypage{%
+  \setlength{\fboxsep}{20pt}\doublebox}{}
+\section{Images}
+\LaTeX{} provides the graphicx package to include images. There are special packages to handle text warping, but using Minipages is a convenient way of handling images. Sample given below: \\
+\hfill
+\\
+\begin{figure}[H]
+\begin{minipage}{0.5\textwidth}
+\includegraphics[width=7cm,height=5cm]{media/Kitten}
+\centering
+\caption{Hello, I am a cat}
+\end{minipage}
+\begin{minipage}
+{.5\textwidth}
+\includegraphics[width=7cm,height=5cm]{media/Kitten2}
+\centering
+\caption{Another cat}
+\end{minipage}
+\end{figure}
+Be sure to check the hyperlinks to the figures. Change the file names to something you can easily remember to avoid getting confused. Make sure all the begin and end tabs are proper, else the images will not render. You can also use scale instead of absolute values in centimeters or millimeters.
+\section{References}
+
+To include References the right way (using Biblatex), search for a Bibtex generator on Google, and feed its output to a seperate Bibtex (Bib) file. Then we simply reference it in our main file and you will get the citations neatly ordered. If you want a quicker (improper hack), then just paste the results of the citation generator. \\
+$[1]$ Figure 2f from: Irimia R, Gottschling M (2016) Taxonomic revision of Rochefortia Sw. (Ehretiaceae, Boraginales). Biodiversity Data Journal 4:e7720 
+\\
+$[2]$ BRANDON, J. 2007. Similarity of temporal query logs. Doctoral dissertation. University of California, Los Angeles. \\
+
+Please note that the citation formats for different documents (articles, reports, dissertations,papers, conference proceedings) and organisations (ACM, IEEE) are different. Use a consistent style.
+\end{document}
