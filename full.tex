@@ -194,7 +194,7 @@ The Tesla Model S, for example, was known to use a specialized chip (MobileEye E
 A traditional strategy to solving the problem of autonomous driving has been to decompose the problem into many sub-problems, such as lane marker detection, path planning, and low-level control, which together comprise a processing pipeline. Recently, researchers have begun to investigate another strategy that drastically streamlines the typical control pipeline by directly producing control outputs from sensor inputs using deep neural networks.In the late 1980s, a small 3-layer fully connected neural network was used to demonstrate the use of neural networks for end-to-end control of autonomous vehicles. Later, in the early 2000s, a DARPA Autonomous Vehicle (DAVE) project  used a 6-layer convolutional neural network (CNN), and most recently, NVIDIA's DAVE-2 project used a 9-layer CNN. All of these experiments use neural network models instead of the traditional hand-written rules and intermediary procedures that are used in traditional robotics control. The neural network models use the raw picture pixels as input and directly output steering control signals. According to NVIDIA's most recent endeavor, its trained CNN drives their modified cars on public roads without any assistance from a human.\\
 \subsection{Adversarial Attacks}
 \begin{figure}[H]
-\includegraphics[width=12cm,height=8cm]{media/adversarial_image.png}
+\includegraphics[width=13cm,height=8cm]{media/adversarial_image.png}
 \centering
 \caption{An adversarial input, overlaid on a typical image, can cause a classifier to miscategorize a panda as a gibbon.}
 \end{figure}
@@ -294,6 +294,50 @@ P_{\rho ,\varepsilon}(\eta ) = arg min\left \| \eta - \eta {_{}}' \right \|_{2} 
     \item In a work by Carlini N, Wagner D, Recent proposals for a defense against hostile instances include MagNet and "Efficient Defenses...". With only a little increase in distortion,hostile cases that overcome these protections can be built.
 \end{enumerate}
 
+\section{Architecture and System Design}
+\subsection{System Overview}
+The simulator, the server, and the front-end web app built using HTML and vanilla javascript are the three main parts of our adversarial driving system. 
+\subsection{Model Architecture Design}
+The model that NVIDIA utilized for its end-to-end self-driving test served as the foundation for the network's design. It is therefore a good fit for the project.\\
+Deep convolutional networks are effective for supervised picture classification and regression. Due to the NVIDIA model's extensive documentation, I was able to concentrate on how to modify the training photos to yield the best results while also making tweaks to the model to prevent overfitting and introduce non-linearity to enhance prediction.\\
+The Model therefore looks like this : \\
+Image normalization\\
+Convolution: 5x5, filter: 24, strides: 2x2, activation: ELU\\
+Convolution: 5x5, filter: 36, strides: 2x2, activation: ELU\\
+Convolution: 5x5, filter: 48, strides: 2x2, activation: ELU\\
+Convolution: 3x3, filter: 64, strides: 1x1, activation: ELU\\
+Convolution: 3x3, filter: 64, strides: 1x1, activation: ELU\\
+Drop out (0.5)\\
+Fully connected: neurons: 100, activation: ELU\\
+Fully connected: neurons: 50, activation: ELU\\
+Fully connected: neurons: 10, activation: ELU\\
+Fully connected: neurons: 1 (output)\\
+According to the NVIDIA model, the fully connected layer is used to anticipate the steering angle while the convolution layers are designed to manage feature engineering. However, it is unclear where to draw such a clear demarcation, as noted in the NVIDIA document. Overall, the model is really useful for duplicating the provided steering behavior.\\
+The model structure output from Keras shown below provides further information on the shapes and amount of parameters
+\begin{figure}[H]
+\includegraphics[width=14cm,height=8cm]{media/layers_screenshot.png}
+\centering
+\caption{CNN architecture of the self-driving autonomous vehicle}
+\end{figure}
+\subsection{System Architecture components}
+The simulator : Unity3D, a cross-platform game engine developed by Unity Technologies, is used to create three-dimensional (3D) and two-dimensional (2D) games, as well as interactive simulations and other experiences, in the self-driving simulator. Outside of video games, the engine has been used in film, automotive, architecture, engineering, construction, and the United States Armed Forces. Once connected, the simulator publishes the image of each frame and accepts steering commands from the server.
+\subsubsection{The backend server}
+The WebSocket backend is built on flask, a server-side Python framework that is lightweight and modular. It accepts simulator connections and returns the control command. Furthermore, it will publish to the front end the noise generated per frame and the generated adversarial images, as well as receive attack commands from the web browser.
+\subsubsection{The web app}
+The front end is a website built with HTML, CSS, and plain JavaScript in which the attacker may select several types of attacks (currently implemented FGSM-r both left and right, Universal Perturbation attack both left and right) and monitor the simulator's status (check the actual image frame, the noise generated, the perturbed image, actual steering angles and predicted steering angles).
+\begin{figure}[H]
+\includegraphics[width=14cm,height=8cm]{media/layers_screenshot.png}
+\centering
+\caption{CNN architecture of the self-driving autonomous vehicle}
+\end{figure}
+\subsection{System Architecture Block diagram}
+\begin{figure}[H]
+\includegraphics[width=14cm,height=8cm]{media/system_design.png}
+\centering
+\caption{System Design}
+\end{figure}
+
+
 
 \section{Implementation}
 \subsection{Software Requirements}
@@ -304,10 +348,10 @@ P_{\rho ,\varepsilon}(\eta ) = arg min\left \| \eta - \eta {_{}}' \right \|_{2} 
     \item \textbf{Keras} 
     A Python interface for artificial neural networks is provided by the open-source software package known as Keras. The TensorFlow library interface is provided by Keras.\\
     A Python interface for artificial neural networks is provided by the open-source software package known as Keras. The TensorFlow library interface is provided by Keras.\\
-    One and only TensorFlow is supported as of version 2.4. Its user-friendliness, modularity, and extensibility are its main design goals as it aims to facilitate quick experimentation with deep neural networks. It was created as a component of the research project ONEIROS (Open-ended Neuro-Electronic Intelligent Robot Operating System), and François Chollet, a Google engineer, is its principal author and maintainer. The deep neural network model for Xception was also created by Chollet.\\
+    One and only TensorFlow is supported as of version 2.4. Its user-friendliness, modularity, and extensibility are its main design goals as it aims to facilitate quick experimentation with deep neural networks. It was created as a component of the research project ONEIROS (Open-ended Neuro-Electronic Intelligent Robot Operating System), and François Chollet, a Google engineer, is its principal author and maintainer. The deep neural network model for Xception was also created by Chollet.
     \item \textbf{Socket.IO}
     An event-driven library for real-time web applications is Socket.IO. It makes it possible for web clients and servers to communicate in real time and in both directions. It consists of a server-side library for Node.js and a client-side library that runs in the browser. The APIs of the two components are remarkably similar.\\
-    While offering the similar interface, Socket.IO primarily uses the WebSocket protocol, with polling as a backup method. Although it can be used as a simple WebSockets wrapper, it offers a wide range of additional functionalities, such as broadcasting to many sockets, storing client-specific data, and asynchronous I/O.\\
+    While offering the similar interface, Socket.IO primarily uses the WebSocket protocol, with polling as a backup method. Although it can be used as a simple WebSockets wrapper, it offers a wide range of additional functionalities, such as broadcasting to many sockets, storing client-specific data, and asynchronous I/O.
     \item \textbf{Flask}
      Developed in Python, Flask is a microweb framework. Due to the fact that it doesn't require any specific tools or libraries, it is categorised as a microframework. [2] It lacks any components where pre-existing third-party libraries already provide common functions, such as a database abstraction layer, form validation, or other components. However, Flask allows for extensions that may be used to add application functionalities just like they were built into the core of Flask. There are extensions for object-relational mappers, form validation, upload handling, several open authentication protocols, and a number of utilities associated with popular frameworks. \\
      The Flask framework is used by applications like Pinterest and LinkedIn.
@@ -346,194 +390,128 @@ P_{\rho ,\varepsilon}(\eta ) = arg min\left \| \eta - \eta {_{}}' \right \|_{2} 
     \begin{figure}[H]
     \includegraphics[width=16cm,height=9cm]{media/folder.jpeg}
     \centering
-    \caption{Folder where images from the left, center and right cameras get stored}
     \end{figure}
-    
-    
 \end{enumerate}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\section{text formatting}
-\LaTeX{} includes some default text sizes. These are labelled: \\
-\huge{huge} \\
-\LARGE{LARGE} \\
-\Large{Large} \\
-\large{large} \\
-\normalsize{normalsize} \\
-\small{small} \\
-\footnotesize{footnotesize} \\
-\scriptsize{scriptsize}
-\newpage
-  \pagestyle{fancy}
-\thisfancypage{%
-  \setlength{\fboxsep}{20pt}\doublebox}{}
-\normalsize
-\subsection{Bold, Italics, Underline and mathmode}
-You can use the text{} tag for normal text. If you are typing paragraphs, it is best to not use any markup as this may cause overflow errors. the textbf tag will give you \textbf{bold text}. You can also use Texmaker's B button on the left editing pane. \\
-You can use textit tag for italics. This will \textit{italicize the text}. You can also use Texmaker's i button on the left editing pane. \\
-You can use the underline tag for underline. This will \underline{underline the text}. \\
-Rendering beautiful equations is one of the features of \LaTeX{}. You can represent Greek and other symbols easily by using the backslash with the symbol name. However to do this you must first enable mathmode. You can do this by using Dollar symbols to encase the mathematical symbols. I use flalign to align my equations properly. Given below are some samples:
-\begin{flalign} \begin{aligned} Stall \, velocity \; V_{stall} = \sqrt{\frac{2W}{\rho S (C_{L})_{max}}} \end{aligned} \end{flalign}
-\begin{flalign}
-\begin{split}
-Take off distance \,Sg= \\
-\frac{1.21(W/S)}{g \rho_{ \infty} C_{Lmax}(T-D/W)-\mu_{r}(1-(L/W))]_{0.7VTO}} \\+
-1.1N\sqrt{\frac{2W}{\rho S C_{Lmax}}}
-\end{split}
-\end{flalign} \\
-You can see that \LaTeX{} also numbers our equations for us!
-\subsection{Coloured Text}
-We can use the textcolour tag to color our text (color is spelt with an american spelling). You can also nest the text styles and sizes mentioned above into the colour tags to produce custom text with different font styles, sizes and colours. Given below are some samples: \\
-\hfill
-\\
-\textcolor{red}{\LARGE{Large red coloured text}} \\
-\textcolor{blue}{\normalsize{Normal blue coloured text}} \\
-\textcolor{green}{\normalsize{\textbf{Bold green coloured text}}} \\
-\textcolor{yellow}{\normalsize{\textit{Italicized yellow coloured text}}}
-\newpage
-  \pagestyle{fancy}
-\thisfancypage{%
-  \setlength{\fboxsep}{20pt}\doublebox}{}
-\twocolumn
-\section{Two Column}
-If you want your report to have the look of a research paper, you can use the twocolumn tag. If you want to switch out of two columns, you can just use the onecolumn tag again. The empty space between the columns is determined by the columnsep parameter, which is at the head of the file. \\
-\\
-You can use the multicols package for 2 or even 3 column layouts and switch dynamically between them on the same page. This however may cause formatting issues and is generally not recommended. If you need to switch to two columns, use a new page to avoid formatting issues. The rest of this page is random text to show you how a two column layout looks.
-\\
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-\\
-Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
-At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. \\
-\\
-This is the end of two column view.
-\onecolumn
-\newpage
-  \pagestyle{fancy}
-\thisfancypage{%
-  \setlength{\fboxsep}{20pt}\doublebox}{}
-\subsection{Hyperlinks}
-\LaTeX{} provides us with Hyperlinks via the Hyperref package. You can use the href tag to link to a URL and name it something. The url tag can be used to link a URL without an alias. The mailto option can be used when referring to an email ID so that the mail client opens up directly when clicked. Latex generated PDFs also show a blue box around links. Examples below: \\
-Link with alias: \href{https://dsce.edu.in/}{DSCE - Homepage} \\
-Link without alias: \url{https://dsce.edu.in/} \\
-My email address is: \href{mailto:ashutosh@gnu.org}{ashutosh@gnu.org} \\
-Combine color with href: \textcolor{blue}{\href{https://dsce.edu.in/}{DSCE - Homepage}} \\
-\section{Code and Algorithms}
-\subsection{Code}
-\LaTeX{} provides us with several packages to handle code. Some of these include verbatim and listings. Listings is far more powerful and as usual, it has to be declared in the header with the usepackage along with colour. Later we define lstset (given in the source file). We define the language and what colours we want for the keywords, numbers, comments et al. An example output is given below: \\
-\definecolor{dkgreen}{rgb}{0,0.6,0}
-\definecolor{gray}{rgb}{0.5,0.5,0.5}
-\definecolor{mauve}{rgb}{0.58,0,0.82}
-
-\lstset{frame=tb,
-  language=Java,
-  aboveskip=3mm,
-  belowskip=3mm,
-  showstringspaces=false,
-  columns=flexible,
-  basicstyle={\small\ttfamily},
-  numbers=none,
-  numberstyle=\tiny\color{gray},
-  keywordstyle=\color{blue},
-  commentstyle=\color{dkgreen},
-  stringstyle=\color{mauve},
-  breaklines=true,
-  breakatwhitespace=true,
-  tabsize=3
-}
-\begin{lstlisting}
-// Hello.java
-import javax.swing.JApplet;
-import java.awt.Graphics;
-
-public class Hello extends JApplet {
-    public void paintComponent(Graphics g) {
-        g.drawString("Hello, world!", 65, 95);
-    }    
-}
-\end{lstlisting}
-\newpage
-  \pagestyle{fancy}
-\thisfancypage{%
-  \setlength{\fboxsep}{20pt}\doublebox}{}
-\subsection{Algorithms}
-Algorithms or Pseudocode can be written using Algorithm2E or Algorithm (deprecated) or Algorithmx packages. Here is an example using Algorithm2e. The package must be included in the document preamble.
-\begin{algorithm}[H]
- \KwData{this text}
- \KwResult{how to write algorithm with \LaTeX2e }
- initialization\;
- \While{not at end of this document}{
-  read current\;
-  \eIf{understand}{
-   go to next section\;
-   current section becomes this one\;
-   }{
-   go back to the beginning of current section\;
-  }
- }
- \caption{How to write algorithms}
-\end{algorithm}
-\section{Tables}
-\LaTeX{} provides several packages for tables. It is easy to draw and modify tables with any number of rows and columns. The table will automatically flow to the next page incase it does not fit in one page. You can use the Xtabs or tabular package to handle many different types of tables. Given below is a sample:
-\begin{table}[H]
-\centering
-\footnotesize
-\begin{tabular}{|p{2cm}| p{2cm} |p{2cm}|p{2cm}|p{2cm}|}
-\hline
-Comp & Ult Load (N) & LA (N) & FoS & MoS\\
-\hline\hline
-Wing & 10 & 12 & 13 & 43\\
-Fuselage & 45.14 & 66.67 & 1.4 & 47\\
-Boom & 978 & 3.42 & 286 & 186\\
-Landing gear & 490.32 & 294 & 13.67& 03.67\\
-\hline
-\end{tabular}
-\caption{Critical Margins Table}
-\label{table:10}
-FoS = Factor of Safety \\
-MoS = Margin of Safety \\
-\end{table}
-The width of the rows and other properties can be edited on the first line begin tabular (see source). Try to avoid multiple table packages together as this may lead to errors.
-\newpage
-  \pagestyle{fancy}
-\thisfancypage{%
-  \setlength{\fboxsep}{20pt}\doublebox}{}
-\section{Images}
-\LaTeX{} provides the graphicx package to include images. There are special packages to handle text warping, but using Minipages is a convenient way of handling images. Sample given below: \\
-\hfill
-\\
+\subsubsection{File Structure}
+This is the folder structure of our project
 \begin{figure}[H]
-\begin{minipage}{0.5\textwidth}
-\includegraphics[width=7cm,height=5cm]{media/Kitten}
+\includegraphics[width=16cm,height=9cm]{media/folder_structure.png}
 \centering
-\caption{Hello, I am a cat}
-\end{minipage}
-\begin{minipage}
-{.5\textwidth}
-\includegraphics[width=7cm,height=5cm]{media/Kitten2}
-\centering
-\caption{Another cat}
-\end{minipage}
 \end{figure}
-Be sure to check the hyperlinks to the figures. Change the file names to something you can easily remember to avoid getting confused. Make sure all the begin and end tabs are proper, else the images will not render. You can also use scale instead of absolute values in centimeters or millimeters.
+Client directory:
+\begin{figure}[H]
+\includegraphics[width=16cm,height=9cm]{media/client_folder_structure.png}
+\centering
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Experimentation and Results}
+\begin{enumerate}
+    \item \textbf{Random noise attack}
+    \begin{figure}[H]
+    \includegraphics[width=16cm,height=9cm]{media/random_noise.png}
+    \centering
+    \caption{Image showing adding perturbation to an input image from the front angle}
+    \end{figure}
+
+    \begin{figure}[H]
+    \includegraphics[width=16cm,height=9cm]{media/random_noise_steeringangle.png}
+    \centering
+    \caption{The random attack where random noise is added to the input image.
+    There is no deviation in the steering angle when random noise is added}
+    \end{figure}
+    
+    \item \textbf{FGSMr : Left}
+    \begin{figure}[H]
+    \includegraphics[width=16cm,height=9cm]{media/fgsn-left-purt.png}
+    \centering
+    \end{figure}
+    
+    \begin{figure}[H]
+    \includegraphics[width=16cm,height=9cm]{media/fgsm-left-steering.png}
+    \centering
+    \caption{The image shows the FGSMr : Left where the steering angle is pulled to left causing a collision.}
+    \end{figure}
+    
+    \item \textbf{FGSMr : Right}
+    \begin{figure}[H]
+    \includegraphics[width=16cm,height=9cm]{media/fgsm-right-purt.png}
+    \centering
+    \end{figure}
+    
+    \begin{figure}[H]
+    \includegraphics[width=16cm,height=9cm]{media/fgsm-right-steering.png}
+    \centering
+    \caption{The image shows the FGSMr : Right where the steering angle is pulled to right causing a collision.}
+    \end{figure}
+    
+    \item \textbf{UAPr No Left}
+    
+    \begin{figure}[H]
+    \includegraphics[width=16cm,height=9cm]{media/uap-left-pirt.png}
+    \centering
+    \end{figure}
+    
+    \begin{figure}[H]
+    \includegraphics[width=16cm,height=9cm]{media/uap-left-steering.png}
+    \centering
+    \caption{The UAPr No Left is a stealth attack. The attack is slow and the steering angle with attack  is being avoided to go left. This attack may cause collision with other cars.}
+    \end{figure}
+    
+    \item \textbf{UAPr No Right}
+    \begin{figure}[H]
+    \includegraphics[width=16cm,height=9cm]{media/uap-right-purt.png}
+    \centering
+    \end{figure}
+    
+
+    \begin{figure}[H]
+    \includegraphics[width=16cm,height=9cm]{media/uap-right-steering.png}
+    \centering
+    \caption{The UAPr No Right is a stealth attack. The attack is slow and the steering angle with attack  is being avoided to go right. This attack may cause collisions with other cars.}
+    \end{figure}
+
+\end{enumerate}
+
+The NVIDIA end-to-end self-driving model is subjected to a number of threats . The steering command is in the -1 to 1 range (from left to right). Below table shows the average absolute and relative steering angle deviations for attacks under 1000 attacks
+
+\begin{figure}[H]
+\includegraphics[width=16cm,height=9cm]{media/table.png}
+\centering
+\end{figure}
+
+\textbf{Attacks conducted}\\
+\begin{enumerate}
+    \item Fast Gradient Sign Method is a strong attack compared to other attacks.In a few seconds after being attacked, the car will go off the road. Different assault directions have similar absolute variances. FGSM right will avoid the car from going right and FGSM left does the opposite.
+    \item The absolute deviation is substantially smaller than the FGSMr and bigger than random sounds, showing that it is effective. The attack is covert because the steering command's tiny deviation makes the vehicle difficult to control. At some crucial points, this might result in incidents. Additionally, because the same perturbation is used for all frames, it is faster than the FGSMr.
+\end{enumerate}
+
+Finally, we design a powerful attack (FGSMr) and a stealth assault (UAPr). While a covert attack may result in mishaps at specific crucial locations, a strong attack will deviate the vehicle in a matter of seconds. The end-to-end driving model is hence susceptible to hostile attacks.\\
+
+
+\textbf{\LARGE{Conclusion and Future Work}}\\
+In this study, we develop two end-to-end targeted white-box assaults against autonomous driving systems. By including perturbations to the input image, it is possible to change the behavior of the driving model. Our research shows that adversarial attacks can also be used against the autonomous driving system, which is a regression problem.\\
+Additionally, additional research might be done to look into how black-box attacks affect end-to-end autonomous driving systems. Modular systems that receive input from a variety of sensors may potentially be vulnerable to hostile attacks. Concerns regarding the use of end-to-end models in safety-critical systems may be raised by this research.\\
+
+
+
 \section{References}
 
 To include References the right way (using Biblatex), search for a Bibtex generator on Google, and feed its output to a seperate Bibtex (Bib) file. Then we simply reference it in our main file and you will get the citations neatly ordered. If you want a quicker (improper hack), then just paste the results of the citation generator. \\
