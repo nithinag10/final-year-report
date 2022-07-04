@@ -31,9 +31,6 @@
 \usepackage{float}
 \renewcommand{\baselinestretch}{1.5}
 \begin{document}
-\lhead{Adversarial Attack on Autonomous Vehicles}
-\chead{}
-\rhead{Manoj, Nithin, Prajwal, Pururav, Batch 60}
 \onecolumn
 \begin{center}
 \text{A Project Report On} \\
@@ -266,13 +263,12 @@ Current research on autonomous driving, which is a regression task, focuses on a
 %
 Our attack strategies rely on a number of presumptions:\\
 %
-We launch our attacks without any pre-labelled ground truth online, we can accept the driving model's output as the actual situation because it is precise enough and we need not attack if the model is flawed in and of itself. The driving task should be failed by the model itself. If the deviation under attack is greater than the divergence under random sounds, then attack is said to be successful.By making these assumptions, we are able to create two distinct attack types that may be used to influence the behaviour of the entire autonomous driving system.\\
+We launch our attacks without any pre-labelled ground truth online, we can accept the driving model's output as the actual situation because it is precise enough and we need not attack if the model is flawed in and of itself. The driving task should be failed by the model itself. If the deviation under attack is greater than the divergence under random sounds, then attack is said to be successful.By making these assumptions, we are able to create two distinct attack types that may be used to influence the behaviour of the entire autonomous driving system.
 %
 \subsubsection{Fast Gradient Sign Method on Regression Models}
 In this white-box approach, the perturbation is determined at each timestep. This assault has the ability to steer the car in the desired direction (either left or right). With input of x and prediction of f, a neural network is indicated by the notation $f(x)$. Regression model attacks may be thought of as binary targeted attacks. We have two options: we can either make the projection bigger or smaller.\\
 In $\eta = sign(\bigtriangledown x\pm f(x))$
 We directly linearize the model's output rather than the cost function in order to influence the behavior of the driving model. The output will grow when f(x) is linearized, but the output will decrease when $f(x)$ is linearized.Our steering command has a left to right range of -1 to 1. The expected steering command will grow if we linearize the function $f(x)$, pushing the car to the right as a result of the attack. Likewise, by linearizing $f(x)$, we may target the vehicle's left side.
-\\
 \subsubsection{ Universal Adversarial Perturbation on Regression Models}
 White-box attack of this kind determines a universal perturbation for each timestep. The two procedures that make up the attack are learning and executing. During the learning process, we will create the universal perturbation for each frame by linearizing the model's output, and then identify the minimal perturbation that shifts the prediction's sign in the desired direction.
 \begin{flalign}
@@ -283,7 +279,96 @@ $\left \| \eta _{0} \right \|_{p} \leq \varepsilon $
 is met, we then project the total perturbation onto the lp ball with a radius of nI and a center at 0.
 \begin{flalign}
 P_{\rho ,\varepsilon}(\eta ) = arg min\left \| \eta - \eta {_{}}' \right \|_{2} subject\left \| \eta {}' \right \|_{p} \leq \varepsilon 
-\end{flalign}
+\end{flalign}\\
+\section{Literature Survey}
+\begin{enumerate}
+    \item In a work by Christian Szegedy, Wojciech Zaremba, Ilya Sutskever, Joan Bruna, Dumitru Erhan, Ian Goodfellow and Rob Fergus, intriguing properties in neural networks are being found where Deep neural network models can be deliberately misclassified by applying a certain hardly perceptible perturbation. In addition, the true form of these perturbations is not a random artifact of learning, similar perturbation can cause a different network, that was trained on a different subset of the dataset, to misclassify the same input.
+    \item In a research by Goodfellow IJ, Shlens J, Szegedy C, a method that adds perturbations from different models to training data is being undertaken. Ensemble Adversarial Training produces models on ImageNet that are more resistant to blackbox attacks. A more sophisticated black-box attack, however, might greatly increase transferability and decrease the accuracy of neural models.
+    \item In a work by Tramèr F, Kurakin A, Papernot N, Goodfellow I, Boneh D, McDaniel P, a degenerate global minimum is reached using an adversarial training method where minor curvature artifacts close to the data points obscure a linear approximation of the loss. In order to guard against powerful perturbations, the model instead learns to generate mild ones.Because of this, we discover that adversarial training is still susceptible to black-box assaults, in which we transfer perturbations computed on undefended models, as well as to a potent new single-step attack that exploits the input data's non-smooth surroundings by taking a little random step. Ensemble Adversarial Training, a method that adds perturbations obtained from other models to training data is being implemented. Ensemble Adversarial Training produces models on ImageNet that are more resistant to blackbox attacks.
+    \item In a work by Kannan H, Kurakin A, Goodfellow I, ImageNet is used  to achieve the most advanced kind of adversarial training at an unprecedented scale.The next step is the introduction of improved defenses using a strategy called "logit pairing," which encourages logits for pairs of samples to be similar. Finally, adversarial logit pairing, with an increase in accuracy from 1.5 percent to 27.9 percent, achieves the most advanced resistance on Imagenet against PGD white box attacks, are demonstrated.
+    \item In a work by Lee H, Han S, Lee J, a novel method for leveraging a generative adversarial network to strengthen neural networks against malicious samples is being provided. Both classifier and generator networks are alternatively trained.This is the first technique that enhances supervised learning using GAN.
+    \item In a work by Chuan Guo, Mayank Rana, Moustapha Cisse & Laurens van der Maaten, The study looks into methods that protect image-classification systems from adversarial-example attacks by modifying the inputs prior to feeding them to the system. To be more precise, transforming images using techniques like bit-depth reduction, JPEG compression, total variance minimization, and image quilting before feeding them to neural network classifiers is being looked at.
+    \item In a work by Xu W, Evans D, Qi Y By identifying hostile examples, a novel technique called "feature squeezing" that can be utilized to strengthen DNN models is being suggested. The search space is decreased via feature squeezing made accessible to a foe by combining samples that match a large number of various feature vectors from the initial space into a single sample. By contrasting a DNN model's forecast with the original data, squeezed inputs, feature squeezing recognises inputs with adversarial examples with low false positives and high accuracy.
+    \item In the work by Samangouei P, Kabkab M, Chellappa R, Defense-GAN, a fresh framework that protects deep neural networks from such assaults by using the expressive power of generative models is suggested. To simulate the distribution of unaltered images, defense-GAN is trained. It locates an output that is almost identical to a given image at inference time but does not include the adversarial alterations. The classifier is then fed this output. Any classification model can be utilized, and neither the classifier structure nor the training process are changed. Defense-GAN outperforms conventional defense tactics and is consistently effective against various attack vectors.
+    \item In the proposition by Meng D, Chen H, MagNet, a system for protecting neural network classifiers from hostile samples is being suggested. Both the protected classifier and the method for creating adversarial instances are not changed by MagNet. They generalize well since they don't presume any particular method for producing adversarial examples. The reformer network successfully classifies adversarial cases with minimal disruption by moving adversarial examples toward the manifold of normal examples.
+    \item In a work by Carlini N, Wagner D, Recent proposals for a defense against hostile instances include MagNet and "Efficient Defenses...". With only a little increase in distortion,hostile cases that overcome these protections can be built.
+\end{enumerate}
+
+
+\section{Implementation}
+\subsection{Software Requirements}
+\begin{enumerate}
+    \item \textbf{Udacity's Self-Driving Car Simulator}
+    A self-driving car simulator has been used for the project .  It was developed by Udacity for a nanodegree program. There are multiple maps present in the simulator. We are demonstrating our project on one of the maps. Simulator makes use of Unity.\\
+    Unity is a cross-platform game engine developed by Unity Technologies, first announced and released in June 2005 at Apple Worldwide Developers. 
+    \item \textbf{Keras} 
+    A Python interface for artificial neural networks is provided by the open-source software package known as Keras. The TensorFlow library interface is provided by Keras.\\
+    A Python interface for artificial neural networks is provided by the open-source software package known as Keras. The TensorFlow library interface is provided by Keras.\\
+    One and only TensorFlow is supported as of version 2.4. Its user-friendliness, modularity, and extensibility are its main design goals as it aims to facilitate quick experimentation with deep neural networks. It was created as a component of the research project ONEIROS (Open-ended Neuro-Electronic Intelligent Robot Operating System), and François Chollet, a Google engineer, is its principal author and maintainer. The deep neural network model for Xception was also created by Chollet.\\
+    \item \textbf{Socket.IO}
+    An event-driven library for real-time web applications is Socket.IO. It makes it possible for web clients and servers to communicate in real time and in both directions. It consists of a server-side library for Node.js and a client-side library that runs in the browser. The APIs of the two components are remarkably similar.\\
+    While offering the similar interface, Socket.IO primarily uses the WebSocket protocol, with polling as a backup method. Although it can be used as a simple WebSockets wrapper, it offers a wide range of additional functionalities, such as broadcasting to many sockets, storing client-specific data, and asynchronous I/O.\\
+    \item \textbf{Flask}
+     Developed in Python, Flask is a microweb framework. Due to the fact that it doesn't require any specific tools or libraries, it is categorised as a microframework. [2] It lacks any components where pre-existing third-party libraries already provide common functions, such as a database abstraction layer, form validation, or other components. However, Flask allows for extensions that may be used to add application functionalities just like they were built into the core of Flask. There are extensions for object-relational mappers, form validation, upload handling, several open authentication protocols, and a number of utilities associated with popular frameworks. \\
+     The Flask framework is used by applications like Pinterest and LinkedIn.
+\end{enumerate}
+
+\subsection{ Implentation Details.}
+\subsubsection{Install Simulator}
+\begin{enumerate}
+    \item Download the simulator into your local machine , install unity into your machine to load the asset files from the simulator.
+    \item After installing unity load the download folder inside unity application. 
+    \item Load up scenes by going to Project tab in the bottom left, and navigating to the folder Assets/SelfDrivingCar/Scenes.
+    \item View Scripts. Scripts are what make all the different mechanics of the simulator work and they are located in two different directories, the first is Assets/SelfDrivingCar/Scripts which mostly relate to the UI and socket connections. The second directory for scripts is Assets/Standard Assets/Vehicle/Car/Scripts and they control all the different interactions with the car.
+\end{enumerate}
+
+\subsubsection{Data Collection}
+\begin{enumerate}
+    \item After opening the simulator, record the track. Drive the car manually. 
+    \begin{figure}[H]
+    \includegraphics[width=16cm,height=9cm]{media/capturing.jpeg}
+    \centering
+    \caption{Driving manually to capture parameters}
+    \end{figure}
+    \item This captures data from front, left, right cameras, with their corresponding steering angle. 
+    \begin{figure}[H]
+    \includegraphics[width=16cm,height=9cm]{media/Data collection system.png}
+    \centering
+    \caption{Data Collection System}
+    \end{figure}
+    \item Data gets stored in an excel format
+    \begin{figure}[H]
+    \includegraphics[width=16cm,height=9cm]{media/excel.jpeg}
+    \centering
+    \caption{Collected data in an excel format to train the model}
+    \end{figure}
+    \item After recording for 2 hours. The obtained data is in this folder structure
+    \begin{figure}[H]
+    \includegraphics[width=16cm,height=9cm]{media/folder.jpeg}
+    \centering
+    \caption{Folder where images from the left, center and right cameras get stored}
+    \end{figure}
+    
+    
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
