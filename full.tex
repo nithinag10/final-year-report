@@ -175,7 +175,7 @@ Our project involves the development of two white-box targeted attacks against e
   \setlength{\fboxsep}{20pt}\doublebox}{}
 \tableofcontents
 \newpage
-  \pagestyle{fancy}
+  \pagestyle{fancy}f
 \thisfancypage{%
   \setlength{\fboxsep}{20pt}\doublebox}{}
 \part{Overview}
@@ -189,15 +189,36 @@ Many companies are actively developing related hardware and software technologie
 %
 The Tesla Model S, for example, was known to use a specialized chip (MobileEye EyeQ) with a vision-based real-time obstacle detection system based on a DNN. Researchers are currently investigating DNN-based end-to-end real-time control for robotics applications. More DNN-based artificial intelligence (AI) workloads are expected to be used in future autonomous vehicles.\\
 \subsubsection{End-to-End Deep Learning for Autonomous Vehicles}
+\begin{figure}[H]
+\includegraphics[width=10cm,height=15cm]{media/CNN_archo}
+\centering
+\caption{ CNN architecture. The network has about 27 million connections and 250 thousand parameters.}
+\end{figure}
 A traditional strategy to solving the problem of autonomous driving has been to decompose the problem into many sub-problems, such as lane marker detection, path planning, and low-level control, which together comprise a processing pipeline. Recently, researchers have begun to investigate another strategy that drastically streamlines the typical control pipeline by directly producing control outputs from sensor inputs using deep neural networks.In the late 1980s, a small 3-layer fully connected neural network was used to demonstrate the use of neural networks for end-to-end control of autonomous vehicles. Later, in the early 2000s, a DARPA Autonomous Vehicle (DAVE) project  used a 6-layer convolutional neural network (CNN), and most recently, NVIDIA's DAVE-2 project used a 9-layer CNN. All of these experiments use neural network models instead of the traditional hand-written rules and intermediary procedures that are used in traditional robotics control. The neural network models use the raw picture pixels as input and directly output steering control signals. According to NVIDIA's most recent endeavor, its trained CNN drives their modified cars on public roads without any assistance from a human.\\
 \subsection{Adversarial Attacks}
+\begin{figure}[H]
+\includegraphics[width=12cm,height=8cm]{media/adversarial_image.png}
+\centering
+\caption{An adversarial input, overlaid on a typical image, can cause a classifier to miscategorize a panda as a gibbon.}
+\end{figure}
 With the rapid advancement of deep learning (DL) and artificial intelligence (AI) approaches, it is essential to guarantee the security and resilience of the implemented algorithms. The security weakness of DL algorithms to hostile samples has recently gained widespread recognition. The fake samples, however they appear harmless to humans, might cause numerous errors in DL models. Adversarial attacks are successfully used in real-world situations to further illustrate its applicability.\\
 %
 As a result, adversarial attack and defense approaches have gained popularity as a study area in recent years among both the machine learning and security communities. The theoretical underpinnings, methods, and applications of adversarial attack strategies are originally introduced in this study. We then go over a few research projects on defensive strategies that span the field's broad horizon. The discussion of a few unresolved issues and difficulties that remain will hopefully spur additional study in this crucial field.\\
+\begin{figure}[H]
+\includegraphics[width=14cm,height=8cm]{media/blackandwhite.png}
+\centering
+\caption{Overview of white and black box attack}
+\end{figure}
 \subsubsection{White Box Attacks}
 The adversary in a white-box attack is fully aware of the target model. The learnt weights and tuning parameters for the model are among the information the opponent is aware of. In other circumstances, labeled training data is also accessible. With this knowledge, the attacker will often model the distribution using weights and generate perturbed inputs in order to breach the bounds.\\
+\begin{figure}[H]
+\includegraphics[width=14cm,height=8cm]{media/whiteboxattack.png}
+\centering
+\caption{White-box attack scenario.}
+\end{figure}
 %
-White-box attack techniques often presuppose that the attacker is fully aware of the architecture and characteristics of the target model. The perturbation is frequently limited within a specific allowable perturbation budget or its Lp is smaller than a specific magnitude, i.e. . ||v||p ≤ e, to make the adversarial perturbation undetectable. Under such restrictions, the majority of adversarial assaults now in use aim to maximize a certain loss L(x + v, y), for which the CE loss is frequently used.\\
+White-box attack techniques often presuppose that the attacker is fully aware of the architecture and characteristics of the target model. The perturbation is frequently limited within a specific allowable perturbation budget or its Lp is smaller than a specific magnitude, i.e. $  \left \| v \right \|_{p} \leq e $
+ to make the adversarial perturbation undetectable. Under such restrictions, the majority of adversarial assaults now in use aim to maximize a certain loss $L(x+v,y)$, for which the CE loss is frequently used.\\
 \subsubsection{Black Box Attacks}
 A black-box attack is one in which the attacker has little understanding of the model and, occasionally, no labeled data. Black-box constraints are frequently attacked by querying the model on inputs, checking the labels, or looking at the confidence levels. Black-box assaults are more practical even though they restrict the attacker's options. These attacks are typically conducted on fully developed and deployed systems. In the actual world, attacks with the purpose of getting around a system, taking it offline, or jeopardizing its integrity occur.\\
 %
@@ -239,31 +260,27 @@ To demonstrate popular adversarial attacks on an end to end regression-based aut
 \subsubsection{Adversarial Attacks on Classification Models}
 Adversarial attacks against classification tasks have now been extensively explored in the last decade, however, we find that comparatively few works focus on regression problems.\\
 %
-For classification problems, the assault is effective if the prediction departs from the ground truth. For regression tasks, an acceptable prediction could be within a range. For example, the estimated property price can vary within a fair range. Using the real number as the ground truth, we can utilize Root Mean Square Error (RMSE) to assess the effectiveness of attacks. An effective attack should result in a larger RMSE loss than random noises. An adversarial attack on a classification model builds an imperceptible adversarial perturbation to form an adversarial example x0 = x + e and have the target model classify x0 as c0 that is distinct from c given a target model f and an original image x with its class c.\\
+For classification problems, the assault is effective if the prediction departs from the ground truth. For regression tasks, an acceptable prediction could be within a range. For example, the estimated property price can vary within a fair range. Using the real number as the ground truth, we can utilize Root Mean Square Error (RMSE) to assess the effectiveness of attacks. An effective attack should result in a larger RMSE loss than random noises. An adversarial attack on a classification model builds an imperceptible adversarial perturbation to form an adversarial example $x_{0} = x + e$ and have the target model classify $x_{0}$ as $c_{0}$ that is distinct from c given a target model f and an original image x with its class c.\\
 \subsection{Proposed Solution}
-Current research on autonomous driving, which is a regression task, focuses on asynchronous offline attacks. The driving record is divided into static images and accompanying steering angles, and the attack is applied to each static image to calculate the total success rate. However, many road accidents are the result of tiny errors made at a key juncture. As a result, some stealth attacks with low overall success rates may nonetheless be dangerous. On the other hand, driving models, like human drivers, can react to adversarial attacks; some attacks may be negated by model reactions if applied synchronously. To explore those stealth attacks and the responses of driving models to those attacks, we would like to conduct online attacks, which means the attack will be carried out while the vehicle is travelling. Online attacks on real-world autonomous driving systems are dangerous. As a result, our adversarial driving system makes use of a self-driving simulator. For example, the fast gradient sign technique (FGSM), which linearizes the cost function around the current value of and produces an ideal max-norm restricted perturbation, is a previous offline assault that typically relies on the ground truth. The cost J(x, y) cannot be determined for an autonomous navigation system since there is no ground truth for the steering command. Even an experienced human driver can perform various tasks in the same environment. Driving safely is a common driving instruction. As a result, we must decide on an appropriate ground truth for our assaults. \\
+Current research on autonomous driving, which is a regression task, focuses on asynchronous offline attacks. The driving record is divided into static images and accompanying steering angles, and the attack is applied to each static image to calculate the total success rate. However, many road accidents are the result of tiny errors made at a key juncture. As a result, some stealth attacks with low overall success rates may nonetheless be dangerous. On the other hand, driving models, like human drivers, can react to adversarial attacks; some attacks may be negated by model reactions if applied synchronously. To explore those stealth attacks and the responses of driving models to those attacks, we would like to conduct online attacks, which means the attack will be carried out while the vehicle is travelling. Online attacks on real-world autonomous driving systems are dangerous. As a result, our adversarial driving system makes use of a self-driving simulator. For example, the fast gradient sign technique (FGSM), which linearizes the cost function around the current value of and produces an ideal max-norm restricted perturbation, is a previous offline assault that typically relies on the ground truth. The cost $J(x, y)$ cannot be determined for an autonomous navigation system since there is no ground truth for the steering command. Even an experienced human driver can perform various tasks in the same environment. Driving safely is a common driving instruction. As a result, we must decide on an appropriate ground truth for our assaults. \\
 %
 Our attack strategies rely on a number of presumptions:\\
 %
 We launch our attacks without any pre-labelled ground truth online, we can accept the driving model's output as the actual situation because it is precise enough and we need not attack if the model is flawed in and of itself. The driving task should be failed by the model itself. If the deviation under attack is greater than the divergence under random sounds, then attack is said to be successful.By making these assumptions, we are able to create two distinct attack types that may be used to influence the behaviour of the entire autonomous driving system.\\
 %
 \subsubsection{Fast Gradient Sign Method on Regression Models}
-In this white-box approach, the perturbation is determined at each timestep. This assault has the ability to steer the car in the desired direction (either left or right). With input of x and prediction of f, a neural network is indicated by the notation f(x). Regression model attacks may be thought of as binary targeted attacks. We have two options: we can either make the projection bigger or smaller.\\
-\begin{flalign}
-\eta = sign(\bigtriangledown x\pm f(x))
-\end{flalign}
-We directly linearize the model's output rather than the cost function in order to influence the behavior of the driving model. The output will grow when f(x) is linearized, but the output will decrease when f(x) is linearized.Our steering command has a left to right range of -1 to 1. The expected steering command will grow if we linearize the function f(x), pushing the car to the right as a result of the attack. Likewise, by linearizing f(x), we may target the vehicle's left side.
+In this white-box approach, the perturbation is determined at each timestep. This assault has the ability to steer the car in the desired direction (either left or right). With input of x and prediction of f, a neural network is indicated by the notation $f(x)$. Regression model attacks may be thought of as binary targeted attacks. We have two options: we can either make the projection bigger or smaller.\\
+In $\eta = sign(\bigtriangledown x\pm f(x))$
+We directly linearize the model's output rather than the cost function in order to influence the behavior of the driving model. The output will grow when f(x) is linearized, but the output will decrease when $f(x)$ is linearized.Our steering command has a left to right range of -1 to 1. The expected steering command will grow if we linearize the function $f(x)$, pushing the car to the right as a result of the attack. Likewise, by linearizing $f(x)$, we may target the vehicle's left side.
 \\
 \subsubsection{ Universal Adversarial Perturbation on Regression Models}
-White-box attack of this kind determines a universal perturbation for each timestep. The two procedures that make up the attack are learning and executing. During the learning process, we will create the universal perturbation for each frame by linearizing the model's output, and then identify the minimal perturbation that shifts the prediction's sign in the desired direction.\\
+White-box attack of this kind determines a universal perturbation for each timestep. The two procedures that make up the attack are learning and executing. During the learning process, we will create the universal perturbation for each frame by linearizing the model's output, and then identify the minimal perturbation that shifts the prediction's sign in the desired direction.
 \begin{flalign}
 \bigtriangledown \eta \leftarrow  \frac{_{\bigtriangledown_{x}(\pm f(x))}}{\left \| \omega  \right \|_{2}}
 \end{flalign}
-To make sure the requirement\\
-\begin{flalign}
-\left \| \eta _{0} \right \|_{p} \leq \varepsilon 
-\end{flalign}
-is met, we then project the total perturbation onto the lp ball with a radius of nI and a center at 0.\\
+To make sure the requirement 
+$\left \| \eta _{0} \right \|_{p} \leq \varepsilon $
+is met, we then project the total perturbation onto the lp ball with a radius of nI and a center at 0.
 \begin{flalign}
 P_{\rho ,\varepsilon}(\eta ) = arg min\left \| \eta - \eta {_{}}' \right \|_{2} subject\left \| \eta {}' \right \|_{p} \leq \varepsilon 
 \end{flalign}
