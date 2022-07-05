@@ -6,13 +6,19 @@
 \usepackage{listings}
 \usepackage[]{algorithm2e}
 \usepackage{color}
+\usepackage{lastpage}
 \usepackage{fancybox}
+   \pagestyle{fancy}
+   \thispagestyle{empty}
 \thisfancypage{%
   \setlength{\fboxsep}{20pt}\doublebox}{}
 \pagestyle{fancy}
 \usepackage{lineno}
 \usepackage{xtab,booktabs}
 \usepackage{setspace}
+\AddToHook{shipout/background}{   \pagestyle{fancy}
+\thisfancypage{%
+  \setlength{\fboxsep}{20pt}\doublebox}{}}
 \usepackage{amsmath}
 \usepackage{xcolor}
 \usepackage[compact]{titlesec}
@@ -53,13 +59,14 @@
 \textit{Under the guidance of} \\
 \textbf{Prof. Sarala D V}\\
 \text{Asst Professor, CSE , DSCE}\\
-\Large{\textbf{2020 - 2021}} \\
+\Large{\textbf{2021 - 2022}} \\
 \textcolor{blue}{\Large{Department of Computer Science and Engineering}} \\
 \textcolor{blue}{\Large{DAYANANDA SAGAR COLLEGE OF ENGINEERING}} \\
 \textcolor{blue}{\Large{Bangalore - 560078}} \\
 \end{center}
 \newpage
-  \pagestyle{fancy}
+   \pagestyle{fancy}
+   \thispagestyle{empty}
 \thisfancypage{%
   \setlength{\fboxsep}{20pt}\doublebox}{}
 \begin{center}
@@ -108,7 +115,8 @@ This is to certify that the project entitled \textbf{Adversarial Attack on Auton
 \text{2.............................} 
 \hfill{............................} \\
 \newpage
-  \pagestyle{fancy}
+   \pagestyle{fancy}
+   \thispagestyle{empty}
 \thisfancypage{%
   \setlength{\fboxsep}{20pt}\doublebox}{}
 \begin{center}
@@ -146,7 +154,8 @@ Lastly, we would like to express our deep appreciation towards our classmates an
 \textbf{Pururav H K \space 1DS18CS098} \\
 \end{flushright}
 \newpage
-  \pagestyle{fancy}
+   \pagestyle{fancy}
+   \thispagestyle{empty}
 \thisfancypage{%
   \setlength{\fboxsep}{20pt}\doublebox}{}
 \setstretch{1.5}
@@ -167,18 +176,29 @@ Our project involves the development of two white-box targeted attacks against e
 \modulolinenumbers[5]
 \onecolumn
 \newpage
-  \pagestyle{fancy}
+    \thispagestyle{empty}
+   \pagestyle{fancy}
 \thisfancypage{%
   \setlength{\fboxsep}{20pt}\doublebox}{}
 \tableofcontents
+\setcounter{figure}{0}
 \newpage
-  \pagestyle{fancy}f
-\thisfancypage{%
-  \setlength{\fboxsep}{20pt}\doublebox}{}
-\part{Overview}
-Welcome to the main body of the report. As you can see we have used the part tag above to label the first part of our report, called the overview. We have done this so that \LaTeX{} can automatically number our document. There are multiple tiers to this numbering, such as sections, subsections, subsubsections and paragraphs. You can also use chapters, but for that at the top of the document you must enable report instead of article. I think 4 levels of nesting is enough. \LaTeX{} also uses the information you have given it to populate the table of contents (Index). So please use the appropriate tags instead of manually changing the font, it will make your document easier to edit, maintain and will also give you a neatly formatted index.
+\listoffigures
+   \thispagestyle{empty}
+
+\fancyhf{}
+\fancyhead[LE,RO]{Batch-60}
+\fancyhead[RE,LO]{ADVERSARIAL ATTACK ON AUTONOMOUS VEHICLES}
+\fancyfoot[RE,LO]{Dept. of CSE, DSCE,2021-2022}
+\pagestyle{fancy}
+\fancyfoot[LE,RO]{\thepage}
+\rfoot{Page \thepage \hspace{1pt} of \pageref{LastPage}}
+\renewcommand{\footrulewidth}{0.4pt}% Default \footrulewidth is 0pt
+\newpage
+   \pagestyle{fancy}
+\setcounter{page}{1}
 \section{Introduction}
-This is a section. I have used the section tab which you can view in the source file.
+Autonomous is one of the safety critical application which extensively use deep learning techniques. This section Introduction to AV's and its vulnerabilities are introduced . 
 \subsection{Autonomous Vehicles}
 Autonomous vehicles (AVs) have the potential to be both disruptive and useful to our transportation system. This innovative technology has the potential to have an impact on vehicle safety, traffic congestion, and travel behavior. Overall, important societal AV impacts in the form of collision saves, reduced travel time, improved fuel economy, and parking advantages are expected to be around 2000 dollars per AV per year, and may eventually reach approximately 4000 dollars when all crash costs are considered.\\
 %
@@ -238,9 +258,11 @@ Here are the reasons why adversarial attacks are important:-
     \item  Acknowledging the Impacts:\\
     Opportunities to introduce a new algorithm into some decision-making processes continue to expand and become more ambitious as the artificial intelligence field develops into one that is incredibly significant. Meanwhile, the development pipeline still frequently follows the "collect data-train-test-deploy" pattern.\\
     %
-    Contradictory machine learning demonstrates why this fails in both large-scale and commercial applications. There are other horrifying examples of how to trick automatic car behaviour with only a few carefully chosen stickers on a traffic sign or how to pretend to be a doctor by using an image that appears to be normal. Because of adversarial machine learning, we are forced to consider the decisions we are making, their significance, and if we have enough resources to defend them.\\
-    \item Earning customer confidence :\\
-    The overall field of artificial intelligence has been deficient in a sense of security and stability. Typically, the typical client is unaware of how precise and secure the AI system is and why it makes certain conclusions. Those potential customers who place a high value on security and performance stability may be won over by demonstrating the system's stability.\\
+    Contradictory machine learning demonstrates why this fails in both large-scale and commercial applications. There are other horrifying examples of how to trick automatic car behaviour with only a few carefully chosen stickers on a traffic sign or how to pretend to be a doctor by using an image that appears to be normal. Because of adversarial machine learning, we are forced to consider the decisions we are making, their significance, and if we have enough resources to defend them.
+    %
+    \item Earning customer confidence :
+    The overall field of artificial intelligence has been deficient in a sense of security and stability. Typically, the typical client is unaware of how precise and secure the AI system is and why it makes certain conclusions. Those potential customers who place a high value on security and performance stability may be won over by demonstrating the system's stability.
+    %
     \item Need for White Hats: \\
     It has long been necessary to test the security of any digital system in order to make sure that it is adequately protected against potential assaults. As a result, numerous specialized methods for producing adversarial instances already exist, with some of them even becoming well-known tools, such as the Fast Sign Gradient Method developed by Ian Goodfellow and others.\\
     %
@@ -249,7 +271,9 @@ Here are the reasons why adversarial attacks are important:-
 \subsection{Organization of the Project Report}
 The project report is organized as given below: \\
 %
-In Chapter (2), we discuss the problem statement and our solution to the problem. The same chapter also deals with the other existing technology. The Chapter that follows i.e. chapter (3) consists of the details on the literature survey of the papers to the problem statement and the proposed solution. In Chapter (4), we present the System Outline and other systems in the form of a Data flow diagram and a sequence diagram. The next chapter, chapter (5) gives the requirements and details about the implementation of the proposed system. Chapter 6 deals with the testing of the product and its desired results. In Chapter (7), we discuss the influencing parameters and their effect on the system. The same chapter deals with establishing the optimal parameters for the system. Chapter (8) concludes the paper along with a mention of the Future Enhancements. Chapter (9) details the references made during the development of the system. The other supporting information and the source code are gathered in the Appendix. \\
+In Chapter (2), we discuss the problem statement, what is the problem with existing systems and our proposed solution to the problem. The Chapter (3) consists of the details on the literature survey of the papers to the problem statement and the proposed solution. In Chapter (4), we present the System Diagram and other systems in the form of a Data flow diagram and a sequence diagram. The next chapter, chapter (5) gives the requirements and details about the implementation of the proposed system. Chapter 6 deals with the testing of the product. In Chapter (7), we discuss the results after testing the system. The same chapter deals with establishing the optimal parameters for the system. Chapter (8) details the references made during the development of the system.\\
+%
+\newpage
 \section{Problem Statement and Proposed Solution}
 \subsection{Problem Statement}
 To demonstrate popular adversarial attacks on an end to end regression-based autonomous driving model\\
@@ -257,7 +281,8 @@ To demonstrate popular adversarial attacks on an end to end regression-based aut
 \subsubsection{Adversarial Attacks on Classification Models}
 Adversarial attacks against classification tasks have now been extensively explored in the last decade, however, we find that comparatively few works focus on regression problems.\\
 %
-For classification problems, the assault is effective if the prediction departs from the ground truth. For regression tasks, an acceptable prediction could be within a range. For example, the estimated property price can vary within a fair range. Using the real number as the ground truth, we can utilize Root Mean Square Error (RMSE) to assess the effectiveness of attacks. An effective attack should result in a larger RMSE loss than random noises. An adversarial attack on a classification model builds an imperceptible adversarial perturbation to form an adversarial example $x_{0} = x + e$ and have the target model classify $x_{0}$ as $c_{0}$ that is distinct from c given a target model f and an original image x with its class c.\\
+For classification problems, the assault is effective if the prediction departs from the ground truth. For regression tasks, an acceptable prediction could be within a range. For example, the estimated property price can vary within a fair range. Using the real number as the ground truth, we can utilize Root Mean Square Error (RMSE) to assess the effectiveness of attacks. An effective attack should result in a larger RMSE loss than random noises.\\
+Given a target model f and an original image x with its class c, an adversarial attack on a classification model creates an undetectable adversarial perturbation to create an adversarial example $x_{0} = x + e$ and get the target model to categorise  $x_{0}$ as $c_{0}$ that is different from c.
 \subsection{Proposed Solution}
 Current research on autonomous driving, which is a regression task, focuses on asynchronous offline attacks. The driving record is divided into static images and accompanying steering angles, and the attack is applied to each static image to calculate the total success rate. However, many road accidents are the result of tiny errors made at a key juncture. As a result, some stealth attacks with low overall success rates may nonetheless be dangerous. On the other hand, driving models, like human drivers, can react to adversarial attacks; some attacks may be negated by model reactions if applied synchronously. To explore those stealth attacks and the responses of driving models to those attacks, we would like to conduct online attacks, which means the attack will be carried out while the vehicle is travelling. Online attacks on real-world autonomous driving systems are dangerous. As a result, our adversarial driving system makes use of a self-driving simulator. For example, the fast gradient sign technique (FGSM), which linearizes the cost function around the current value of and produces an ideal max-norm restricted perturbation, is a previous offline assault that typically relies on the ground truth. The cost $J(x, y)$ cannot be determined for an autonomous navigation system since there is no ground truth for the steering command. Even an experienced human driver can perform various tasks in the same environment. Driving safely is a common driving instruction. As a result, we must decide on an appropriate ground truth for our assaults. \\
 %
@@ -279,40 +304,49 @@ $\left \| \eta _{0} \right \|_{p} \leq \varepsilon $
 is met, we then project the total perturbation onto the lp ball with a radius of nI and a center at 0.
 \begin{flalign}
 P_{\rho ,\varepsilon}(\eta ) = arg min\left \| \eta - \eta {_{}}' \right \|_{2} subject\left \| \eta {}' \right \|_{p} \leq \varepsilon 
-\end{flalign}\\
+\end{flalign}
+\subsection{System Requirements}
+\begin{itemize}
+    \item Processor: 1.6 GHz or faster processor or SoC
+    \item RAM: Minimum of 4 GB RAM
+    \item GPU: Nvidia RTX 1050 or above preferred
+    \item OS Version: Windows 10, MacOS or any Linux distribution
+    \item Other software : Anaconda or MiniConda
+\end{itemize}
+\newpage
 \section{Literature Survey}
 \begin{enumerate}
-    \item In a work by Christian Szegedy, Wojciech Zaremba, Ilya Sutskever, Joan Bruna, Dumitru Erhan, Ian Goodfellow and Rob Fergus, intriguing properties in neural networks are being found where Deep neural network models can be deliberately misclassified by applying a certain hardly perceptible perturbation. In addition, the true form of these perturbations is not a random artifact of learning, similar perturbation can cause a different network, that was trained on a different subset of the dataset, to misclassify the same input.
+    \item In a work by Christian Szegedy, Wojciech Zaremba, Ilya Sutskever, Joan Bruna, Dumitru Erhan, Ian Goodfellow and Rob Fergus, intriguing properties in neural networks are being found where Deep neural network models can be deliberately misclassified by applying a certain hardly perceptible perturbation. Furthermore, these perturbations are not just a result of learning at random; under similar perturbations, a different network that was trained on a different part of the dataset may incorrectly categorize the same input.
     \item In a research by Goodfellow IJ, Shlens J, Szegedy C, a method that adds perturbations from different models to training data is being undertaken. Ensemble Adversarial Training produces models on ImageNet that are more resistant to blackbox attacks. A more sophisticated black-box attack, however, might greatly increase transferability and decrease the accuracy of neural models.
     \item In a work by Tramèr F, Kurakin A, Papernot N, Goodfellow I, Boneh D, McDaniel P, a degenerate global minimum is reached using an adversarial training method where minor curvature artifacts close to the data points obscure a linear approximation of the loss. In order to guard against powerful perturbations, the model instead learns to generate mild ones.Because of this, we discover that adversarial training is still susceptible to black-box assaults, in which we transfer perturbations computed on undefended models, as well as to a potent new single-step attack that exploits the input data's non-smooth surroundings by taking a little random step. Ensemble Adversarial Training, a method that adds perturbations obtained from other models to training data is being implemented. Ensemble Adversarial Training produces models on ImageNet that are more resistant to blackbox attacks.
     \item In a work by Kannan H, Kurakin A, Goodfellow I, ImageNet is used  to achieve the most advanced kind of adversarial training at an unprecedented scale.The next step is the introduction of improved defenses using a strategy called "logit pairing," which encourages logits for pairs of samples to be similar. Finally, adversarial logit pairing, with an increase in accuracy from 1.5 percent to 27.9 percent, achieves the most advanced resistance on Imagenet against PGD white box attacks, are demonstrated.
     \item In a work by Lee H, Han S, Lee J, a novel method for leveraging a generative adversarial network to strengthen neural networks against malicious samples is being provided. Both classifier and generator networks are alternatively trained.This is the first technique that enhances supervised learning using GAN.
-    \item In a work by Chuan Guo, Mayank Rana, Moustapha Cisse & Laurens van der Maaten, The study looks into methods that protect image-classification systems from adversarial-example attacks by modifying the inputs prior to feeding them to the system. To be more precise, transforming images using techniques like bit-depth reduction, JPEG compression, total variance minimization, and image quilting before feeding them to neural network classifiers is being looked at.
+    \item In a work by Chuan Guo, Mayank Rana, Moustapha Cisse and Laurens van der Maaten, The study looks into methods that protect image-classification systems from adversarial-example attacks by modifying the inputs prior to feeding them to the system. To be more precise, transforming images using techniques like bit-depth reduction, JPEG compression, total variance minimization, and image quilting before feeding them to neural network classifiers is being looked at.
     \item In a work by Xu W, Evans D, Qi Y By identifying hostile examples, a novel technique called "feature squeezing" that can be utilized to strengthen DNN models is being suggested. The search space is decreased via feature squeezing made accessible to a foe by combining samples that match a large number of various feature vectors from the initial space into a single sample. By contrasting a DNN model's forecast with the original data, squeezed inputs, feature squeezing recognises inputs with adversarial examples with low false positives and high accuracy.
     \item In the work by Samangouei P, Kabkab M, Chellappa R, Defense-GAN, a fresh framework that protects deep neural networks from such assaults by using the expressive power of generative models is suggested. To simulate the distribution of unaltered images, defense-GAN is trained. It locates an output that is almost identical to a given image at inference time but does not include the adversarial alterations. The classifier is then fed this output. Any classification model can be utilized, and neither the classifier structure nor the training process are changed. Defense-GAN outperforms conventional defense tactics and is consistently effective against various attack vectors.
     \item In the proposition by Meng D, Chen H, MagNet, a system for protecting neural network classifiers from hostile samples is being suggested. Both the protected classifier and the method for creating adversarial instances are not changed by MagNet. They generalize well since they don't presume any particular method for producing adversarial examples. The reformer network successfully classifies adversarial cases with minimal disruption by moving adversarial examples toward the manifold of normal examples.
     \item In a work by Carlini N, Wagner D, Recent proposals for a defense against hostile instances include MagNet and "Efficient Defenses...". With only a little increase in distortion,hostile cases that overcome these protections can be built.
 \end{enumerate}
-
+\newpage
 \section{Architecture and System Design}
 \subsection{System Overview}
 The simulator, the server, and the front-end web app built using HTML and vanilla javascript are the three main parts of our adversarial driving system. 
 \subsection{Model Architecture Design}
 The model that NVIDIA utilized for its end-to-end self-driving test served as the foundation for the network's design. It is therefore a good fit for the project.\\
-Deep convolutional networks are effective for supervised picture classification and regression. Due to the NVIDIA model's extensive documentation, I was able to concentrate on how to modify the training photos to yield the best results while also making tweaks to the model to prevent overfitting and introduce non-linearity to enhance prediction.\\
-The Model therefore looks like this : \\
+Deep convolutional networks perform well in supervised image classification and regression tasks. Using the detailed records provided by the NVIDIA model, we were able to focus on how to adjust the learning photos to obtain the best outcomes while also making model adjustments to prevent overfitting and introduce non-linearity to improve prediction.\\
+The Model therefore looks like this \\
 Image normalization\\
-Convolution: 5x5, filter: 24, strides: 2x2, activation: ELU\\
-Convolution: 5x5, filter: 36, strides: 2x2, activation: ELU\\
-Convolution: 5x5, filter: 48, strides: 2x2, activation: ELU\\
-Convolution: 3x3, filter: 64, strides: 1x1, activation: ELU\\
-Convolution: 3x3, filter: 64, strides: 1x1, activation: ELU\\
+Convolution Layer: 5X5, Filter used: 24, Strides used: 2X2, Activation function: Exponential Linear Unit\\
+Convolution Layer: 5X5, Filter used: 36, Strides used: 2X2, Activation function: Exponential Linear Unit\\
+Convolution Layer: 5X5, Filter used: 48, Strides used: 2X2, Activation function: Exponential Linear Unit\\
+Convolution Layer: 3X3, Filter used: 64, Strides used: 1X1, Activation function: Exponential Linear Unit\\
+Convolution Layer: 3X3, Filter used: 64, Strides used: 1X1, Activation function: Exponential Linear Unit\\
 Drop out (0.5)\\
-Fully connected: neurons: 100, activation: ELU\\
-Fully connected: neurons: 50, activation: ELU\\
-Fully connected: neurons: 10, activation: ELU\\
-Fully connected: neurons: 1 (output)\\
-According to the NVIDIA model, the fully connected layer is used to anticipate the steering angle while the convolution layers are designed to manage feature engineering. However, it is unclear where to draw such a clear demarcation, as noted in the NVIDIA document. Overall, the model is really useful for duplicating the provided steering behavior.\\
+Fully connected Layer : Number of neurons: 100, Activation function: Exponential Linear Unit\\
+Fully connected Layer : Number of neurons: 50, Activation function: Exponential Linear Unit\\
+Fully connected Layer : Number of neurons: 10, Activation function: Exponential Linear Unit\\
+Fully connected Layer : Number of neurons: 1 (Output Layer)\\
+The fully connected layer in the self driving model is used to foretell the steering angle, while the convolution layers are designed to manage feature engineering. Nevertheless, as noted in the NVIDIA documentation, it is unclear where such a clear demarcation should be drawn. Overall, the model is extremely helpful in replicating the provided steering behavior.\\
 The model structure output from Keras shown below provides further information on the shapes and amount of parameters
 \begin{figure}[H]
 \includegraphics[width=14cm,height=8cm]{media/layers_screenshot.png}
@@ -320,25 +354,20 @@ The model structure output from Keras shown below provides further information o
 \caption{CNN architecture of the self-driving autonomous vehicle}
 \end{figure}
 \subsection{System Architecture components}
-The simulator : Unity3D, a cross-platform game engine developed by Unity Technologies, is used to create three-dimensional (3D) and two-dimensional (2D) games, as well as interactive simulations and other experiences, in the self-driving simulator. Outside of video games, the engine has been used in film, automotive, architecture, engineering, construction, and the United States Armed Forces. Once connected, the simulator publishes the image of each frame and accepts steering commands from the server.
+\subsubsection{The simulator}
+Unity3D, a cross-platform game engine developed by Unity Technologies, is used to create 3D and 2D games, as well as interactive simulations and other experiences, in the self-driving simulator. Outside of video games, the engine has been used in film, automotive, architecture, engineering, construction, and the United States Armed Forces. Once connected, the simulator publishes the image of each frame and accepts steering commands from the server.
 \subsubsection{The backend server}
 The WebSocket backend is built on flask, a server-side Python framework that is lightweight and modular. It accepts simulator connections and returns the control command. Furthermore, it will publish to the front end the noise generated per frame and the generated adversarial images, as well as receive attack commands from the web browser.
 \subsubsection{The web app}
 The front end is a website built with HTML, CSS, and plain JavaScript in which the attacker may select several types of attacks (currently implemented FGSM-r both left and right, Universal Perturbation attack both left and right) and monitor the simulator's status (check the actual image frame, the noise generated, the perturbed image, actual steering angles and predicted steering angles).
-\begin{figure}[H]
-\includegraphics[width=14cm,height=8cm]{media/layers_screenshot.png}
-\centering
-\caption{CNN architecture of the self-driving autonomous vehicle}
-\end{figure}
+
 \subsection{System Architecture Block diagram}
 \begin{figure}[H]
 \includegraphics[width=14cm,height=8cm]{media/system_design.png}
 \centering
 \caption{System Design}
 \end{figure}
-
-
-
+\newpage
 \section{Implementation}
 \subsection{Software Requirements}
 \begin{enumerate}
@@ -353,7 +382,7 @@ The front end is a website built with HTML, CSS, and plain JavaScript in which t
     An event-driven library for real-time web applications is Socket.IO. It makes it possible for web clients and servers to communicate in real time and in both directions. It consists of a server-side library for Node.js and a client-side library that runs in the browser. The APIs of the two components are remarkably similar.\\
     While offering the similar interface, Socket.IO primarily uses the WebSocket protocol, with polling as a backup method. Although it can be used as a simple WebSockets wrapper, it offers a wide range of additional functionalities, such as broadcasting to many sockets, storing client-specific data, and asynchronous I/O.
     \item \textbf{Flask}
-     Developed in Python, Flask is a microweb framework. Due to the fact that it doesn't require any specific tools or libraries, it is categorised as a microframework. [2] It lacks any components where pre-existing third-party libraries already provide common functions, such as a database abstraction layer, form validation, or other components. However, Flask allows for extensions that may be used to add application functionalities just like they were built into the core of Flask. There are extensions for object-relational mappers, form validation, upload handling, several open authentication protocols, and a number of utilities associated with popular frameworks. \\
+    Flask is a microweb framework written in Python. It is classified as a microframework because it does not require any special tools or libraries.  It is devoid of any components where third-party libraries already provide common functions, such as a database abstraction layer, form validation, or other components. Flask, on the other hand, supports extensions that can be used to add application functionality, just as they were built into the core of Flask. Extensions for object-relational mappers, form validation, upload handling, several open authentication protocols, and utilities associated with popular frameworks are available. \\
      The Flask framework is used by applications like Pinterest and LinkedIn.
 \end{enumerate}
 
@@ -363,7 +392,7 @@ The front end is a website built with HTML, CSS, and plain JavaScript in which t
     \item Download the simulator into your local machine , install unity into your machine to load the asset files from the simulator.
     \item After installing unity load the download folder inside unity application. 
     \item Load up scenes by going to Project tab in the bottom left, and navigating to the folder Assets/SelfDrivingCar/Scenes.
-    \item View Scripts. Scripts are what make all the different mechanics of the simulator work and they are located in two different directories, the first is Assets/SelfDrivingCar/Scripts which mostly relate to the UI and socket connections. The second directory for scripts is Assets/Standard Assets/Vehicle/Car/Scripts and they control all the different interactions with the car.
+    \item View Scripts. Scripts are what end up making the simulator's numerous fundamentals work, and they are located in two separate directories. The first is Assets/1 SelfDrivingCar/Scripts, which mostly deals with the UI and socket connections. The second script directory is Assets/Standard Assets/Vehicle/Car/Scripts, and it controls all of the car's interactions.
 \end{enumerate}
 
 \subsubsection{Data Collection}
@@ -404,24 +433,57 @@ Client directory:
 \includegraphics[width=16cm,height=9cm]{media/client_folder_structure.png}
 \centering
 \end{figure}
+main.go contains environment configuration and initialization of client side rendering.
+After running drive.py and model.h5 click on client.exe, this will listen on port 3333 and render simulator feedback in web interface through web socket. 
+The web directory contains the HTML file that is to be served to the client (attacker), the CSS file to style the webpage and the JavaScript file to establish the websocket connections.\\
+The model directory:
+\begin{figure}[H]
+\includegraphics[width=16cm,height=9cm]{media/model_directory.png}
+\centering
+\end{figure}
+The file structure of the model directory is listed above. \\
+adversarialdriving.py :
+This python file basically consists of AdversarialDriving class with the following instance variables:\\
+model : An instance of the DAVE 2 self driving model\\
+attacktype : Type of attack that is implemented\\
+activate : If the attacker has set the mode to attack or not\\
+epsilon : The value of epsilon in case of FGSM-r\\
+loss : loss value calculated using k-means algorithm\\
+grads : the gradients calculated with respect to the input values\\
+delta : the value obtained after implementing the sign function on the gradients\\
+sess : the keras session initialized\\
+perturbs : the perturbations generated\\
+unirnoleft : initial values of the universal perturbations to nudge the care towards right\\
+unirnorightt : initial values of the universal perturbations to nudge the care towards left\\
+result : The adversarial image generated\\
+The below are the methods implemented in the AdversarialDriving class:\\
+init : This function is used to set the instance variables mentioned above based on the attack type specified by the attacker.\\
+projlp : This function is used to apply l2 normalization when it comes to universal perturbations\\
+attack : In this method, all the attacks are implemented.\\
+drive.py: 
+This is a python file where the flask framework is implemented to establish the websocket connections, the max speeds of the car and the logic to convert image to base64 is implemented.\\
+Following are the websocket events registered:\\
+@sio.on('connect') : To establish the connection between the webapp and the server.\\
+@sio.on('attack') : To send the type of attack from the webapp to the server\\
+@sio.on('telemetry') : To send the frame by frame images, perturbations and perturbed image from the server to the webapp.\\
+sendcontrol(steeringangle, throttle) : This is a function which is used to send the steering angle and the throttle values to the simulator by emitting a ‘steer’ event.\\
+environment.yml:
+This file consists of the environment details and requirements to run our project.\\
+model.h5:
+Contains the weights of the DAVE2 model.\\
+model.py:
+This contains the tensorflow implementation of the DAVE2 model.\\
+unirnoleft.pickle:
+This file consist of universal perturbation which is trained on a sample dataset.\\
+unirnoright.pickle:
+This file consist of universal perturbation which is trained on a sample dataset. \\
+utils.py:
+This is a utility file which contains utility functions like loading an image from local device, cropping, resizing, convert RGB to YUV,image preprocessor, random flipping of image, random translation of image, random brightness adjust and image batch generator.\\
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Simulator directory:
+This directory includes the necessary files to run the simulator.\\
+Download unity software to run simulator. After running client.exe go to the location of beta simulator location and run it. This will open with unity software. This is a simulator build by udacity for their self driving nano degree course. After opening simulator it as two options, training and autonomous mode with two types of tracks. In training we can do transfer learning and in autonomous mode we can run vehicle  autonomously and we can also see steering at the top left. Now we can perform different adversarial attack on autonomously running vehicle through web interface which is listening and giving feedback  to simulator through port 3333 in localhost. \\
+\newpage
 \section{Experimentation and Results}
 \begin{enumerate}
     \item \textbf{Random noise attack}
@@ -430,7 +492,6 @@ Client directory:
     \centering
     \caption{Image showing adding perturbation to an input image from the front angle}
     \end{figure}
-
     \begin{figure}[H]
     \includegraphics[width=16cm,height=9cm]{media/random_noise_steeringangle.png}
     \centering
@@ -443,7 +504,6 @@ Client directory:
     \includegraphics[width=16cm,height=9cm]{media/fgsn-left-purt.png}
     \centering
     \end{figure}
-    
     \begin{figure}[H]
     \includegraphics[width=16cm,height=9cm]{media/fgsm-left-steering.png}
     \centering
@@ -455,7 +515,6 @@ Client directory:
     \includegraphics[width=16cm,height=9cm]{media/fgsm-right-purt.png}
     \centering
     \end{figure}
-    
     \begin{figure}[H]
     \includegraphics[width=16cm,height=9cm]{media/fgsm-right-steering.png}
     \centering
@@ -463,25 +522,21 @@ Client directory:
     \end{figure}
     
     \item \textbf{UAPr No Left}
-    
     \begin{figure}[H]
     \includegraphics[width=16cm,height=9cm]{media/uap-left-pirt.png}
     \centering
     \end{figure}
-    
     \begin{figure}[H]
     \includegraphics[width=16cm,height=9cm]{media/uap-left-steering.png}
     \centering
     \caption{The UAPr No Left is a stealth attack. The attack is slow and the steering angle with attack  is being avoided to go left. This attack may cause collision with other cars.}
     \end{figure}
-    
+
     \item \textbf{UAPr No Right}
     \begin{figure}[H]
     \includegraphics[width=16cm,height=9cm]{media/uap-right-purt.png}
     \centering
     \end{figure}
-    
-
     \begin{figure}[H]
     \includegraphics[width=16cm,height=9cm]{media/uap-right-steering.png}
     \centering
@@ -489,15 +544,13 @@ Client directory:
     \end{figure}
 
 \end{enumerate}
-
 The NVIDIA end-to-end self-driving model is subjected to a number of threats . The steering command is in the -1 to 1 range (from left to right). Below table shows the average absolute and relative steering angle deviations for attacks under 1000 attacks
 
 \begin{figure}[H]
 \includegraphics[width=16cm,height=9cm]{media/table.png}
 \centering
 \end{figure}
-
-\textbf{Attacks conducted}\\
+\textbf{Attacks conducted}
 \begin{enumerate}
     \item Fast Gradient Sign Method is a strong attack compared to other attacks.In a few seconds after being attacked, the car will go off the road. Different assault directions have similar absolute variances. FGSM right will avoid the car from going right and FGSM left does the opposite.
     \item The absolute deviation is substantially smaller than the FGSMr and bigger than random sounds, showing that it is effective. The attack is covert because the steering command's tiny deviation makes the vehicle difficult to control. At some crucial points, this might result in incidents. Additionally, because the same perturbation is used for all frames, it is faster than the FGSMr.
@@ -507,17 +560,32 @@ Finally, we design a powerful attack (FGSMr) and a stealth assault (UAPr). While
 
 
 \textbf{\LARGE{Conclusion and Future Work}}\\
+
 In this study, we develop two end-to-end targeted white-box assaults against autonomous driving systems. By including perturbations to the input image, it is possible to change the behavior of the driving model. Our research shows that adversarial attacks can also be used against the autonomous driving system, which is a regression problem.\\
 Additionally, additional research might be done to look into how black-box attacks affect end-to-end autonomous driving systems. Modular systems that receive input from a variety of sensors may potentially be vulnerable to hostile attacks. Concerns regarding the use of end-to-end models in safety-critical systems may be raised by this research.\\
+\newpage
+\textbf{\LARGE{References}}\\
 
+\begin{itemize}
+    \item Szegedy C, Zaremba W, Sutskever I, Bruna J, Erhan D, Goodfellow I, et al. "Intriguing properties of neural networks". 2013. arXiv:1312.6199.
+    \item Goodfellow IJ, Shlens J, Szegedy C. "Explaining and harnessing adversarial examples". 2014. arXiv:1412.6572.
+    \item Tramèr F, Kurakin A, Papernot N, Goodfellow I, Boneh D, McDaniel P. "Ensemble adversarial training: attacks and defenses". 2017. arXiv:1705.07204.
+    \item Kannan H, Kurakin A, Goodfellow I. "Adversarial logit pairing". 2018. arXiv:1803.06373
+    \item Lee H, Han S, Lee J. "Generative adversarial trainer: defense to adversarial perturbations with GAN". 2017. arXiv: 1705.03387
+    \item Chuan Guo Cornell University Mayank Rana & Moustapha Cisse & Laurens van der Maaten ´ "Facebook AI Research, COUNTERING ADVERSARIAL IMAGES USING INPUT TRANSFORMATIONS, Published as a conference paper at ICLR 2018"
+    \item Xu W, Evans D, Qi Y. "Feature squeezing: detecting adversarial examples in deep neural networks". 2017. arXiv: 1704.01155.
+    \item Samangouei P, Kabkab M, Chellappa R. "Defense-GAN: protecting classifiers against adversarial attacks using generative models. 2018". arXiv:1805.06605
+    \item Meng D, Chen H. "MagNet: a two-pronged defense against adversarial examples. In: Proceedings of the 2017 ACM SIGSAC Conference on Computer and Communications Security"; 2017 Oct 30–Nov 3; New York, NY, USA; 2017. p. 135–47
+    \item Carlini N, Wagner D. MagNet and ‘‘efficient defenses against adversarial attacks” are not robust to adversarial examples. 2017. arXiv:1711.08478.
+    \item Raghunathan A, Steinhardt J, Liang P. "Certified defenses against adversarial examples". 2018. arXiv:1801.09344.
+    \item Wong E, Schmidt FR, Metzen JH, Kolter JZ. "Scaling provable adversarial defenses". 2018. arXiv:1805.12514.
+    \item Wong E, Schmidt FR, Metzen JH, Kolter JZ. "Scaling provable adversarial defenses". 2018. arXiv:1805.12514.
+    \item Sinha A, Namkoong H, Duchi J. "Certifying some distributional robustness with principled adversarial training". 2017. arXiv:1710.10571.
+    \item Wang Y, Jha S, Chaudhuri K. "Analyzing the robustness of nearest neighbors to adversarial examples". 2017. arXiv: 1706.03922.
+    \item Neal RM. "Bayesian learning for neural networks. New York: Springer Science & Business Media"; 2012.
+    \item Liu X, Cheng M, Zhang H, Hsieh CJ. "Towards robust neural networks via random self-ensemble. In: Proceedings of the 2018 European Conference on Computer Vision; 2018 Sep 8–14; Munich, Germany"; 2018. p. 369–85
+    \item Xiao C, Deng R, Li B, Yu F, Liu M, Song D. "Characterizing adversarial examples based on spatial consistency information for semantic segmentation. In: Proceedings of the European Conference on Computer Vision"; 2018 Sep 8–14; Munich, Germany; 2018. p. 217–34.
+    \item Yang Z, Li B, Chen PY, Song D. "Characterizing audio adversarial examples using temporal dependency". 2018. arXiv:1809.10875
+\end{itemize}
 
-
-\section{References}
-
-To include References the right way (using Biblatex), search for a Bibtex generator on Google, and feed its output to a seperate Bibtex (Bib) file. Then we simply reference it in our main file and you will get the citations neatly ordered. If you want a quicker (improper hack), then just paste the results of the citation generator. \\
-$[1]$ Figure 2f from: Irimia R, Gottschling M (2016) Taxonomic revision of Rochefortia Sw. (Ehretiaceae, Boraginales). Biodiversity Data Journal 4:e7720 
-\\
-$[2]$ BRANDON, J. 2007. Similarity of temporal query logs. Doctoral dissertation. University of California, Los Angeles. \\
-
-Please note that the citation formats for different documents (articles, reports, dissertations,papers, conference proceedings) and organisations (ACM, IEEE) are different. Use a consistent style.
 \end{document}
